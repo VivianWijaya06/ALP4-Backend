@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar - CookEasy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .error-message { color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem; }
+    .input-error { border-color: #ef4444 !important; }
+    .password-strength { height: 4px; background-color: #e5e7eb; margin-top: 8px; border-radius: 2px; overflow: hidden; }
+    .password-strength-fill { height: 100%; width: 0%; transition: width 0.3s ease, background-color 0.3s ease; }
+  </style>
+</head>
+<body class="bg-[#fff9f4] flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+    <div class="text-center mb-8">
+      🍴 Cook<span class="text-orange-500">Pedia</span>
+      <h2 class="text-xl font-semibold text-gray-600 mt-2">Buat Akun</h2>
+    </div>
+    
+    <form id="signupForm" novalidate>
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Pengguna</label>
+        <div class="relative">
+          <i class='bx bx-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'></i>
+          <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#803F22]" placeholder="Nama anda" required>
+        </div>
+        <div id="name-error" class="error-message"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <div class="relative">
+          <i class='bx bx-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'></i>
+          <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#803F22]" placeholder="email@contoh.com" required>
+        </div>
+        <div id="email-error" class="error-message"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+        <div class="relative">
+          <i class='bx bx-lock-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'></i>
+          <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#803F22]" placeholder="Minimal 8 karakter" minlength="8" required>
+          <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <i class='bx bx-hide'></i>
+          </button>
+        </div>
+        <div class="password-strength"><div id="password-strength-fill" class="password-strength-fill"></div></div>
+        <div id="password-error" class="error-message"></div>
+        <div class="text-xs text-gray-500 mt-1">
+          <p>Syarat dan ketentuan kata sandi:</p>
+          <ul class="list-disc list-inside">
+            <li id="length-requirement">Minimal 8 karakter</li>
+            <li id="uppercase-requirement">Minimal 1 huruf kapital</li>
+            <li id="number-requirement">Minimal 1 angka</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi kata sandi</label>
+        <div class="relative">
+          <i class='bx bx-lock-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'></i>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#803F22]" placeholder="Konfirmasi Kata Sandi" required>
+          <button type="button" id="toggleConfirmPassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <i class='bx bx-hide'></i>
+          </button>
+        </div>
+        <div id="confirmPassword-error" class="error-message"></div>
+      </div>
+
+      <div class="flex items-center mb-6">
+        <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-[#803F22] focus:ring-[#803F22] border-gray-300 rounded">
+        <label for="terms" class="ml-2 block text-sm text-gray-700">
+          Dengan mendaftar, berarti anda setuju dengan <a href="#" class="text-[#803F22] hover:underline">Syarat</a> dan <a href="#" class="text-[#803F22] hover:underline">Ketentuan</a>
+        </label>
+      </div>
+
+      <button type="submit" id="submitBtn" class="w-full bg-[#803F22] text-white py-2 rounded hover:bg-[#6e3520] transition flex justify-center items-center">
+        <span id="submitText">Daftar</span>
+        <svg id="submitSpinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600 mt-6">
+      Sudah punya akun? <a href="signin.html" class="text-[#803F22] font-medium hover:underline">Masuk</a>
+    </p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const signupForm = document.getElementById('signupForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+      const submitBtn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      const submitSpinner = document.getElementById('submitSpinner');
+      const termsCheckbox = document.getElementById('terms');
+      const passwordStrengthFill = document.getElementById('password-strength-fill');
+
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.innerHTML = type === 'password' ? '<i class="bx bx-hide"></i>' : '<i class="bx bx-show"></i>';
+      });
+
+      toggleConfirmPassword.addEventListener('click', () => {
+        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        toggleConfirmPassword.innerHTML = type === 'password' ? '<i class="bx bx-hide"></i>' : '<i class="bx bx-show"></i>';
+      });
+
+      function showError(input, message) {
+        const errorElement = document.getElementById(`${input.id}-error`);
+        input.classList.add('input-error');
+        errorElement.textContent = message;
+      }
+
+      function clearError(input) {
+        const errorElement = document.getElementById(`${input.id}-error`);
+        input.classList.remove('input-error');
+        errorElement.textContent = '';
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase());
+      }
+
+      function updatePasswordStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+
+        let width = 0, color = '#ef4444';
+        if (strength === 1) { width = 33; }
+        else if (strength === 2) { width = 66; color = '#f59e0b'; }
+        else if (strength === 3) { width = 100; color = '#10b981'; }
+
+        passwordStrengthFill.style.width = `${width}%`;
+        passwordStrengthFill.style.backgroundColor = color;
+      }
+
+      signupForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        let valid = true;
+
+        if (!nameInput.value.trim()) { showError(nameInput, 'Nama tidak boleh kosong'); valid = false; }
+        else { clearError(nameInput); }
+
+        if (!validateEmail(emailInput.value.trim())) { showError(emailInput, 'Format email tidak valid'); valid = false; }
+        else { clearError(emailInput); }
+
+        if (passwordInput.value.length < 8) { showError(passwordInput, 'Password minimal 8 karakter'); valid = false; }
+        else { clearError(passwordInput); }
+
+        if (confirmPasswordInput.value !== passwordInput.value) { showError(confirmPasswordInput, 'Password tidak cocok'); valid = false; }
+        else { clearError(confirmPasswordInput); }
+
+        if (!termsCheckbox.checked) { alert('Harap setujui syarat & ketentuan.'); valid = false; }
+
+        if (!valid) return;
+
+        submitText.textContent = 'Mendaftarkan...';
+        submitSpinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+
+        try {
+          const response = await fetch('http://localhost:8080/api/users/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: nameInput.value.trim(),
+              email: emailInput.value.trim(),
+              password: passwordInput.value.trim()
+            })
+          });
+
+          const message = await response.text();
+          if (response.ok) {
+            localStorage.setItem('cookeasyUser', JSON.stringify({
+              name: nameInput.value.trim(),
+              email: emailInput.value.trim(),
+              authMethod: 'email'
+            }));
+            window.location.href = 'index.html';
+          } else {
+            alert('Pendaftaran gagal: ' + message);
+          }
+        } catch (err) {
+          alert('Gagal terhubung ke server.');
+        } finally {
+          submitText.textContent = 'Daftar';
+          submitSpinner.classList.add('hidden');
+          submitBtn.disabled = false;
+        }
+      });
+
+      passwordInput.addEventListener('input', e => updatePasswordStrength(e.target.value));
+    });
+  </script>
+</body>
+</html>

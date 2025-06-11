@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lupa Kata Sandi - CookEasy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .error-message {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body class="bg-[#fff9f4] flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+    <div class="text-center mb-8">
+      🍴 Cook<span class="text-orange-500">Easy</span>
+      <h2 class="text-xl font-semibold text-gray-600 mt-2">Lupa Kata Sandi</h2>
+      <p class="text-sm text-gray-500 mt-1">Masukkan email kamu untuk mengatur ulang kata sandi.</p>
+    </div>
+
+    <form id="resetForm" novalidate>
+      <div class="mb-4">
+        <label for="resetEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <div class="relative">
+          <i class='bx bx-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'></i>
+          <input type="email" id="resetEmail" name="resetEmail"
+            class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#803F22]"
+            placeholder="email@example.com"
+            required>
+        </div>
+        <div id="reset-error" class="error-message"></div>
+      </div>
+
+      <button type="submit" id="resetBtn" class="w-full bg-[#803F22] text-white py-2 rounded hover:bg-[#6e3520] transition">
+        Kirim Tautan Reset
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600 mt-6">
+      Ingat kata sandi?
+      <a href="signin.html" class="text-[#803F22] font-medium hover:underline">Kembali ke Login</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('resetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('resetEmail');
+      const error = document.getElementById('reset-error');
+      const emailVal = email.value.trim();
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailVal === '') {
+        error.textContent = 'Email tidak boleh kosong';
+        email.classList.add('border-red-500');
+      } else if (!re.test(emailVal.toLowerCase())) {
+        error.textContent = 'Format email tidak valid';
+        email.classList.add('border-red-500');
+      } else {
+        error.textContent = '';
+        email.classList.remove('border-red-500');
+        alert('Tautan reset kata sandi telah dikirim ke email Anda (simulasi).');
+        window.location.href = 'signin.html';
+      }
+    });
+  </script>
+</body>
+</html>

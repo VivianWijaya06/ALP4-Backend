@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChefBot - Asisten Memasak</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    </style>
+</head>
+
+
+<body class="bg-[#fff8f3] text-gray-800">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+
+      <div class="flex-shrink-0">
+        <h1 class="text-2xl font-bold text-[#803f22] tracking-wide">
+          🍴 Cook<span class="text-orange-500">Easy</span>
+        </h1>
+      </div>
+
+      <div class="hidden md:flex flex-grow justify-center space-x-6 items-center text-sm font-medium text-[#803f22]">
+        <a href="index.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Homepage</a>
+        <a href="recipe.html" class="text-orange-500 font-semibold border-b-2 border-orange-500 active:scale-95">Recipe</a>
+        <a href="guide.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Basic Guide</a>
+        <a href="saved.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Saved</a>
+      </div>
+
+      <div class="flex-shrink-0" id="userMenu">
+        <a href="signin.html" class="bg-gradient-to-r from-[#803f22] to-orange-600 text-white px-4 py-2 rounded-full hover:shadow-lg transition-all duration-300 active:scale-95 flex items-center">
+          <span>Login</span>
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+          </svg>
+        </a>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+    <!-- Tombol Back yang lebih menonjol -->
+    <div class="container mx-auto px-6 py-4">
+        <a href="index.html" class="bg-[#803f22] text-white px-4 py-2 rounded-lg hover:bg-[#6a3418] transition-all duration-300 inline-flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Homepage
+        </a>
+    </div>
+
+    <section class="container mx-auto px-4 py-12 text-center">
+        <h2 class="text-4xl font-bold text-[#803f22] mb-4">Selamat Datang di ChefBot</h2>
+        <p class="text-gray-600 text-lg max-w-xl mx-auto">Asisten memasak interaktif yang siap membantu kamu dengan tips memasak, resep, dan jawaban instan atas pertanyaan seputar dapur!</p>
+    </section>
+
+    
+  <!-- Chat Section -->
+  <section class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 mb-12">
+    <h3 class="text-2xl font-semibold mb-4 text-[#803f22]">Mulai Bertanya ke ChefBot</h3>
+    
+    <!-- Chat Container -->
+    <div class="h-80 overflow-y-auto border border-gray-200 rounded-lg p-4 mb-4 bg-gray-50" id="chatBox">
+      <div class="text-gray-500 italic">ChefBot siap membantu kamu. Ketik pertanyaanmu di bawah!</div>
+    </div>
+
+    <!-- Input Form -->
+    <form id="chatForm" class="flex">
+      <input type="text" id="userInput" placeholder="Contoh: Bagaimana cara membuat rendang?" class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none" />
+      <button type="submit" class="bg-[#803f22] text-white px-6 rounded-r-lg hover:bg-[#6a3418] transition">Kirim</button>
+    </form>
+  </section>
+  
+
+  <!-- Footer -->
+  <footer class="bg-[#803f22] text-white pt-10 pb-6 mt-10">
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-3">🍴 CookEasy</h3>
+        <p class="text-sm text-orange-100">Find daily cooking inspiration from simple recipes to family favorites. Make cooking easier and more fun!</p>
+        <p class="text-sm mt-3 text-orange-200">&copy; 2025 CookEasy</p>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-3">Fast Navigation </h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="index.html" class="hover:text-orange-300 transition">Homepage</a></li>
+          <li><a href="recipe.html" class="hover:text-orange-300 transition">Recipe</a></li>
+          <li><a href="guide.html" class="hover:text-orange-300 transition">Basic Guide</a></li>
+          <li><a href="saved.html" class="hover:text-orange-300 transition">Saved</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-3">Contact Us</h4>
+        <ul class="text-sm space-y-1 text-orange-100">
+          <li>Email: <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookeasy.com</a></li>
+          <li>Instagram: <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookeasy</a></li>
+          <li>Facebook: <a href="#" class="hover:text-orange-300">CookEasy Official</a></li>
+          <li>WhatsApp: <a href="https://wa.me/6281234567890" class="hover:text-orange-300">+62 812-3456-7890</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-orange-300 mt-8 pt-4 text-center text-sm text-orange-200">
+      Made with love and passion for cooking in Indonesia  🇮🇩
+    </div>
+  </footer>
+
+  
+
+  <!-- JavaScript Simulasi Respon -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const userData = localStorage.getItem('cookeasyUser');
+      const userMenu = document.getElementById('userMenu');
+
+      if(userData && userMenu) {
+        const user = JSON.parse(userData);
+        userMenu.innerHTML = `
+          <div class="relative group">
+            <button class="bg-[#803f22] text-white px-4 py-1 rounded flex items-center space-x-2 hover:bg-[#5c2c14] transition-all duration-300 active:scale-95">
+              <span>Profil</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="absolute right-0 mt-2 w-32 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+              <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+              <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+          const confirmLogout = confirm("Apakah Anda yakin ingin logout?");
+          if (confirmLogout) {
+            localStorage.removeItem('cookeasyUser');
+            location.reload();
+          }
+        });
+      }
+    });
+    
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('userInput');
+    const chatBox = document.getElementById('chatBox');
+  
+    // Fungsi untuk memproses pertanyaan pengguna
+    function processCookingQuestion(question) {
+      const lowerQuestion = question.toLowerCase();
+      
+      // Greetings
+      if (/halo|hai|hi|pagi|siang|malam/.test(lowerQuestion)) {
+        return "Halo! Saya ChefBot, siap membantu Anda dengan berbagai pertanyaan seputar memasak. Ada yang bisa saya bantu?";
+      }
+      
+      // Thank you
+      if (/terima kasih|makasih|thanks|thank you/.test(lowerQuestion)) {
+        return "Sama-sama! Senang bisa membantu. Jika ada pertanyaan lain, jangan ragu untuk bertanya ya!";
+      }
+      
+      // Eggs
+      if (/telur/.test(lowerQuestion)) {
+        if (/dadar|mata sapi|ceplok/.test(lowerQuestion)) {
+          return "Untuk membuat telur dadar: 1. Kocok 2 butir telur dengan garam secukupnya. 2. Panaskan sedikit minyak di wajan dengan api sedang. 3. Tuang telur, masak hingga bagian bawah matang. 4. Balik dan masak sebentar. Tips: Tambahkan irisan daun bawang atau bawang bombay untuk variasi!";
+        }
+        return "Telur bisa diolah dengan berbagai cara: rebus, dadar, orak-arik, atau mata sapi. Untuk telur rebus sempurna: rebus 7 menit untuk kuning telur setengah matang, 12 menit untuk matang sempurna.";
+      }
+      
+      // Fried rice
+      if (/nasi goreng/.test(lowerQuestion)) {
+        return "Resep dasar nasi goreng: \n1. Tumis bawang putih, bawang merah, dan cabai hingga harum \n2. Masukkan nasi dingin, aduk rata \n3. Tambahkan kecap manis, kecap asin, garam, dan merica \n4. Buat lubang di tengah, masukkan telur, orak-arik \n5. Tambahkan ayam/udang dan sayuran sesuai selera \n6. Aduk rata dan sajikan panas";
+      }
+      
+      // Chicken
+      if (/ayam/.test(lowerQuestion)) {
+        if (/goreng/.test(lowerQuestion)) {
+          return "Resep ayam goreng sederhana: \n1. Marinasi ayam dengan bawang putih halus, ketumbar, garam, dan kunyit selama minimal 30 menit \n2. Gulingkan ayam dalam tepung terigu \n3. Goreng dalam minyak panas dengan api sedang hingga kecokelatan \n4. Tiriskan di atas kertas penyerap minyak";
+        }
+        if (/bakar|panggang/.test(lowerQuestion)) {
+          return "Ayam bakar lezat: \n1. Marinasi ayam dengan kecap manis, bawang putih, ketumbar, dan sedikit jeruk nipis selama 2 jam \n2. Panggang di oven 180°C selama 40 menit, balik sekali \n3. Oles dengan bumbu marinasi setiap 10 menit \n4. Untuk ekstra smoky, panggang sebentar di atas arang";
+        }
+        return "Ayam adalah bahan serbaguna. Tips: \n- Untuk hasil terbaik, gunakan ayam segar \n- Marinasi minimal 30 menit untuk rasa lebih dalam \n- Masak hingga suhu internal mencapai 75°C untuk memastikan matang sempurna";
+      }
+      
+      // Meat
+      if (/daging|sapi|rendang|empal/.test(lowerQuestion)) {
+        if (/empuk/.test(lowerQuestion)) {
+          return "Agar daging empuk: \n1. Pilih potongan yang tepat (sengkel, sandung lamur) \n2. Marinasi dengan nanas/pepaya/kiwi selama 30 menit \n3. Masak perlahan dengan metode braising (rebus kecil lama) \n4. Potong melawan serat saat menyajikan \n5. Untuk rendang, masak hingga kuah menyusut dan berminyak";
+        }
+        return "Daging sapi segar berwarna merah cerah. Tips memasak: \n- Biarkan daging mencapai suhu ruang sebelum dimasak \n- Jangan terlalu sering membalik saat memanggang \n- Diamkan 5-10 menit setelah matang sebelum dipotong";
+      }
+      
+      // Vegetables
+      if (/sayur|wortel|brokoli|kangkung|bayam/.test(lowerQuestion)) {
+        return "Tips memasak sayuran: \n1. Cuci bersih sebelum dipotong \n2. Masak sebentar untuk mempertahankan nutrisi (2-3 menit untuk brokoli) \n3. Tambahkan garam di akhir proses memasak \n4. Untuk sayuran hijau, masak dengan api besar dan cepat \n5. Kukus atau tumis lebih baik daripada merebus untuk menjaga nutrisi";
+      }
+      
+      // Cooking basics
+      if (/pemula|dasar|tips|saran/.test(lowerQuestion)) {
+        return "Tips untuk pemula: \n1. Siapkan semua bahan sebelum mulai (mise en place) \n2. Pelajari cara mengasah dan menggunakan pisau \n3. Mulai dengan resep sederhana \n4. Ikuti resep dengan tepat saat pertama kali mencoba \n5. Beli bahan berkualitas \n6. Jangan takut gagal - itu bagian dari proses belajar!";
+      }
+      
+      // If no specific match
+      const randomResponses = [
+        "Saya bisa membantu dengan resep, teknik memasak, dan tips dapur. Coba tanyakan tentang: cara membuat nasi goreng, tips memasak ayam, atau cara membuat daging empuk.",
+        "Pertanyaan menarik! Saya bisa membantu dengan berbagai topik memasak. Mau tanya tentang resep, teknik, atau bahan tertentu?",
+        "ChefBot siap membantu! Anda bisa bertanya tentang: \n- Resep masakan Indonesia \n- Teknik dasar memasak \n- Tips memilih bahan \n- Cara menyimpan makanan"
+      ];
+      return randomResponses[Math.floor(Math.random() * randomResponses.length)];
+    }
+  
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userText = input.value.trim();
+      if (!userText) return;
+  
+      // Tampilkan pesan pengguna
+      const userMsg = `<div class="mb-2 text-right"><span class="bg-[#803f22] text-white px-3 py-1 rounded-lg inline-block">${userText}</span></div>`;
+      chatBox.innerHTML += userMsg;
+  
+      // Proses pertanyaan dan dapatkan jawaban
+      const botReply = processCookingQuestion(userText);
+      
+      // Tampilkan jawaban ChefBot setelah jeda singkat
+      setTimeout(() => {
+        const botMsg = `<div class="mb-4 text-left"><span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-lg inline-block">${botReply.replace(/\n/g, '<br>')}</span></div>`;
+        chatBox.innerHTML += botMsg;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 700);
+  
+      input.value = '';
+    });
+
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        form.dispatchEvent(new Event('submit'));
+      }
+    });
+  </script>
+</body>
+</html>
