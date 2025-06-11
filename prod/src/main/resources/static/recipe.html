@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resep - CookEasy</title>
+  <title>Resep - CookPedia</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <style>
@@ -296,11 +296,11 @@
           <ul class="space-y-3 text-sm text-orange-100">
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookpedia.com</a>
+              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookpedia</a>
+              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">👍</span>
@@ -349,19 +349,72 @@
     }
   });
   
-    function filterRecipes() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.recipe-card');
+  function filterRecipes() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.recipe-card');
 
-      cards.forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        if (title.includes(input)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      if (title.includes(input)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Tambah tombol Simpan ke setiap resep setelah DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const userData = JSON.parse(localStorage.getItem('cookeasyUser'));
+
+    document.querySelectorAll('.recipe-card').forEach(card => {
+      const title = card.querySelector('h3').textContent.trim();
+
+      const saveBtn = document.createElement('button');
+      saveBtn.textContent = '❤️ Simpan';
+      saveBtn.className = 'mt-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-full hover:bg-orange-600 transition';
+      saveBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        if (!userData || !userData.id) {
+          alert('Anda harus login terlebih dahulu untuk menyimpan resep.');
+          return;
+        }
+
+        try {
+          const recipeId = await getRecipeIdByTitle(title);
+          const payload = {
+            user: { id: userData.id },
+            recipe: { id: recipeId }
+          };
+
+          const res = await fetch('http://localhost:8080/api/saved', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) throw new Error('Gagal menyimpan resep.');
+
+          alert('Resep disimpan!');
+        } catch (err) {
+          console.error(err);
+          alert('Terjadi kesalahan saat menyimpan.');
         }
       });
+
+      card.querySelector('.p-5').appendChild(saveBtn);
+    });
+
+    async function getRecipeIdByTitle(title) {
+      const res = await fetch('http://localhost:8080/api/recipes');
+      if (!res.ok) throw new Error('Gagal mengambil daftar resep');
+      const recipes = await res.json();
+      const found = recipes.find(r => r.title.trim().toLowerCase() === title.toLowerCase());
+      if (!found) throw new Error('Resep tidak ditemukan di database');
+      return found.id;
     }
+  });
   </script>
 
 </body>
