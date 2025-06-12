@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resep - CookPedia</title>
+  <title>Resep - CookEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -14,26 +14,26 @@
   </style>
 </head>
 
-<body class="bg-[#fff9f7] text-gray-800">
+<body class="bg-[#fff9f7] text-gray-800 min-h-screen flex flex-col">
  <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
       <div class="flex-shrink-0">
         <h1 class="text-2xl font-bold text-[#803f22] tracking-wide">
-          🍴 Cook<span class="text-orange-500">Easy</span>
+          🍴 Cook<span class="text-orange-500">Pedia</span>
         </h1>
       </div>
 
       <div class="hidden md:flex flex-grow justify-center space-x-6 items-center text-sm font-medium text-[#803f22]">
-        <a href="index.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Homepage</a>
-        <a href="recipe.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Recipe</a>
-        <a href="guide.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Basic Guide</a>
-        <a href="saved.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Saved</a>
+        <a href="index.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Beranda</a>
+        <a href="recipe.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Resep</a>
+        <a href="guide.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Panduan</a>
+        <a href="saved.html" class="hover:text-orange-500 transition-all duration-300 active:scale-95">Simpan</a>
       </div>
 
       <div class="flex-shrink-0" id="userMenu">
         <a href="signin.html" class="bg-gradient-to-r from-[#803f22] to-orange-600 text-white px-4 py-2 rounded-full hover:shadow-lg transition-all duration-300 active:scale-95 flex items-center">
-          <span>Login</span>
+          <span>Masuk</span>
           <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
           </svg>
@@ -42,29 +42,84 @@
     </div>
   </nav>
 
-  <div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-      <div class="bg-white rounded-2xl profile-card p-6 mb-8">
-        <div class="flex flex-col md:flex-row items-center">
-          <div
-            class="w-32 h-32 rounded-full bg-gradient-to-r from-[#ffe1d8] to-[#fff3ec] flex items-center justify-center mb-4 md:mb-0 md:mr-6"
-          >
-            <i class="fas fa-user text-5xl text-[#803f22]"></i>
+  <main class="flex-grow">
+    <div class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl profile-card p-6 mb-8">
+          <div class="flex flex-col md:flex-row items-center">
+            <div
+              class="w-32 h-32 rounded-full bg-gradient-to-r from-[#ffe1d8] to-[#fff3ec] flex items-center justify-center mb-4 md:mb-0 md:mr-6"
+            >
+              <i class="fas fa-user text-5xl text-[#803f22]"></i>
+            </div>
+            <div class="text-center md:text-left flex-1">
+              <h1 id="profileUsername" class="text-2xl font-bold text-[#803f22]">Nama Pengguna</h1>
+              <p id="profileEmail" class="text-gray-600 mb-2">user@example.com</p>
+            </div>
+            <a href="profiledit.html" class="ml-auto hidden md:inline-block bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center">
+              Edit Profil
+            </a>
           </div>
-          <div class="text-center md:text-left flex-1">
-            <h1 id="profileUsername" class="text-2xl font-bold text-[#803f22]">Username</h1>
-            <p id="profileEmail" class="text-gray-600 mb-2">user@example.com</p>
-          </div>
-          <a href="profiledit.html" class="ml-auto hidden md:inline-block bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center">
-            Edit Profile
+          <a href="profiledit.html" class="mt-4 w-full md:hidden bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center inline-block">
+              Edit Profil
           </a>
         </div>
-        <a href="profiledit.html" class="mt-4 w-full md:hidden bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center inline-block">
-            Edit Profile
-        </a>
       </div>
     </div>
-  </div>
+  </main>
+
+  <footer class="bg-gradient-to-b from-[#803f22] to-[#5a2d18] text-white pt-12 pb-8 slide-up delay-5">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div class="flex flex-col">
+          <div class="flex items-center mb-4">
+            <span class="text-2xl mr-2">🍴</span>
+            <h3 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-300 to-amber-200">CookPedia</h3>
+          </div>
+          <p class="text-sm text-orange-100 mb-4 leading-relaxed">
+            Temukan inspirasi memasak harian dari resep sederhana hingga favorit keluarga. Jadikan memasak lebih mudah dan menyenangkan!
+          </p>
+          <div class="mt-auto">
+            <p class="text-xs text-orange-200 font-medium">&copy; 2025 CookPedia</p>
+          </div>
+        </div>
+
+        <div class="md:pl-8">
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Navigasi Cepat</h4>
+          <ul class="grid grid-cols-2 gap-2 text-sm">
+            <li><a href="index.html" class="hover:text-orange-300 transition flex items-center py-1">
+              <span class="w-1 h-1 bg-orange-300 rounded-full mr-2"></span>Beranda</a></li>
+            <li><a href="recipe.html" class="hover:text-orange-300 transition flex items-center py-1">
+              <span class="w-1 h-1 bg-orange-300 rounded-full mr-2"></span>Resep</a></li>
+            <li><a href="guide.html" class="hover:text-orange-300 transition flex items-center py-1">
+              <span class="w-1 h-1 bg-orange-300 rounded-full mr-2"></span>Panduan</a></li>
+            <li><a href="ChefBot.html" class="hover:text-orange-300 transition flex items-center py-1">
+              <span class="w-1 h-1 bg-orange-300 rounded-full mr-2"></span>Chefbot</a></li>
+            <li><a href="saved.html" class="hover:text-orange-300 transition flex items-center py-1">
+              <span class="w-1 h-1 bg-orange-300 rounded-full mr-2"></span>Simpan</a></li>
+          </ul>
+        </div>
+
+        <div class="md:pl-8">
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Kontak</h4>
+          <ul class="space-y-3 text-sm text-orange-100">
+            <li class="flex items-start">
+              <span class="mr-3 mt-0.5">📧</span>
+              <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookpedia.com</a>
+            </li>
+            <li class="flex items-start">
+              <span class="mr-3 mt-0.5">📱</span>
+              <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookpedia</a>
+            </li>
+            <li class="flex items-start">
+              <span class="mr-3 mt-0.5">👍</span>
+              <a href="#" class="hover:text-orange-300">CookPedia Official</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 <!-- bagian HTML tetap sama seperti sebelumnya -->
 <!-- ... -->

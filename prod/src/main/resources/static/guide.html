@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panduan Dasar - CookPedia</title>
+  <title>Panduan Dasar - CookEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <style>
@@ -202,11 +202,11 @@
           <ul class="space-y-3 text-sm text-orange-100">
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
+              <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookpedia.com</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
+              <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookpedia</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">👍</span>
@@ -224,12 +224,11 @@
   </a>  
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  const userDataString = localStorage.getItem('cookeasyUser');
-    const userData = userDataString ? JSON.parse(userDataString) : null;
+  const userData = localStorage.getItem('cookeasyUser');
   const userMenu = document.getElementById('userMenu');
 
   if(userData) {
-        // Parse userData safely
+        const user = JSON.parse(userData);
         userMenu.innerHTML = `
           <div class="relative group inline-block text-left">
           <button class="bg-[#803f22] text-white px-4 py-2 rounded-md flex items-center justify-between gap-2 hover:bg-[#5c2c14] transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#a8552f]">
