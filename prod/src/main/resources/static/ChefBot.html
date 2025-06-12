@@ -116,11 +116,11 @@
   <!-- JavaScript Simulasi Respon -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const userData = localStorage.getItem('cookeasyUser');
+      const userDataString = localStorage.getItem('cookeasyUser');
+      const userData = userDataString ? JSON.parse(userDataString) : null;
       const userMenu = document.getElementById('userMenu');
 
       if(userData && userMenu) {
-        const user = JSON.parse(userData);
         userMenu.innerHTML = `
           <div class="relative group">
             <button class="bg-[#803f22] text-white px-4 py-1 rounded flex items-center space-x-2 hover:bg-[#5c2c14] transition-all duration-300 active:scale-95">

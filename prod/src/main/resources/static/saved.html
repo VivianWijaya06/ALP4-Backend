@@ -155,12 +155,15 @@
   </a> 
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    let globalUserData = null;
+    let savedRecipes = [];
+
+    document.addEventListener('DOMContentLoaded', async function() {
       const userData = localStorage.getItem('cookeasyUser');
       const userMenu = document.getElementById('userMenu');
 
       if(userData) {
-          const user = JSON.parse(userData);
+          globalUserData = JSON.parse(userData);
           userMenu.innerHTML = `
             <div class="relative group inline-block text-left">
             <button class="bg-[#803f22] text-white px-4 py-2 rounded-md flex items-center justify-between gap-2 hover:bg-[#5c2c14] transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#a8552f]">
@@ -180,34 +183,58 @@
           const confirmLogout = confirm("Apakah Anda yakin ingin logout?");
           if (confirmLogout) {
             localStorage.removeItem('cookeasyUser');
+            globalUserData = null;
             location.reload();
           }
         });
+
+        // Load saved recipes from backend
+        await loadSavedRecipes();
+      } else {
+          // If not logged in, show empty state
+          renderRecipes();
       }
     });
 
-    const savedRecipes = [
-      { 
-        title: "Nasi Goreng Spesial", 
-        desc: "Tumis bawang putih, masukkan nasi, telur, kecap, dan cabai.",
-        prepTime: "15 menit"
-      },
-      { 
-        title: "Ayam Bakar Teflon", 
-        desc: "Marinasi ayam lalu bakar di teflon sampai matang.",
-        prepTime: "30 menit"
-      },
-      { 
-        title: "Spaghetti", 
-        desc: "Masak saus carbonara yang creamy",
-        prepTime: "20 menit"
-      },
-      { 
-        title: "Sop Sayur Sehat", 
-        desc: "Rebus sayur-sayuran dan bumbu sederhana untuk sup lezat.",
-        prepTime: "20 menit"
+    async function loadSavedRecipes() {
+      if (!globalUserData || !globalUserData.id) {
+        console.log('No user data available');
+        renderRecipes();
+        return;
       }
-    ];
+
+      try {
+        console.log('Loading saved recipes for user:', globalUserData.id);
+        const response = await fetch(`http://localhost:8080/api/saved/${globalUserData.id}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const savedRecipeData = await response.json();
+        console.log('Loaded saved recipes:', savedRecipeData);
+        
+        // Transform the backend data to match our frontend format
+        savedRecipes = savedRecipeData.map(saved => ({
+          savedRecipeId: saved.id,  // This is the SaveRecipe entity ID for deletion
+          title: saved.recipe.title,
+          desc: saved.recipe.description,
+          prepTime: `${saved.recipe.durationInMinutes} menit`,
+          difficulty: saved.recipe.difficulty,
+          userId: saved.user.id,
+          recipeId: saved.recipe.id
+        }));
+        
+        console.log('Transformed saved recipes:', savedRecipes);
+        renderRecipes();
+        
+      } catch (error) {
+        console.error('Error loading saved recipes:', error);
+        // Show empty state on error
+        savedRecipes = [];
+        renderRecipes();
+      }
+    }
 
     const container = document.getElementById("savedRecipes");
     const emptyState = document.getElementById("emptyState");
@@ -230,12 +257,13 @@
         card.innerHTML = `
           <div class="flex justify-between items-start mb-2">
             <h3 class="text-xl font-semibold text-[#803f22]">${recipe.title}</h3>
+            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">${recipe.difficulty}</span>
           </div>
           <p class="text-gray-700 text-sm mb-4">${recipe.desc}</p>
           <div class="flex justify-between items-center">
             <span class="text-xs text-gray-500">⏱️ ${recipe.prepTime}</span>
             <button class="remove-btn text-red-600 text-sm hover:underline font-medium" onclick="removeRecipe(${index})">
-              Hapus
+              🗑️ Hapus
             </button>
           </div>
         `;
@@ -243,18 +271,52 @@
       });
     }
 
-    function removeRecipe(index) {
-      const cards = document.querySelectorAll('.recipe-card');
-      cards[index].classList.add('animate__animated', 'animate__fadeOut');
+    async function removeRecipe(index) {
+      const recipe = savedRecipes[index];
       
-      setTimeout(() => {
-        savedRecipes.splice(index, 1);
-        renderRecipes();
+      if (!globalUserData || !recipe) {
+        alert('Terjadi kesalahan saat menghapus resep.');
+        return;
+      }
 
-        if (savedRecipes.length === 0) {
-          showConfetti();
+      const confirmDelete = confirm(`Apakah Anda yakin ingin menghapus "${recipe.title}" dari simpanan?`);
+      if (!confirmDelete) return;
+
+      try {
+        console.log('Deleting saved recipe with ID:', recipe.savedRecipeId);
+        
+        // Call backend API to delete saved recipe using the SaveRecipe entity ID
+        const response = await fetch(`http://localhost:8080/api/saved/${recipe.savedRecipeId}`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Delete failed:', errorText);
+          throw new Error('Failed to delete recipe from backend');
         }
-      }, 300);
+
+        console.log('Recipe deleted successfully from backend');
+
+        // Remove from UI with animation
+        const cards = document.querySelectorAll('.recipe-card');
+        if (cards[index]) {
+          cards[index].classList.add('animate__animated', 'animate__fadeOut');
+        }
+        
+        setTimeout(() => {
+          savedRecipes.splice(index, 1);
+          renderRecipes();
+
+          if (savedRecipes.length === 0) {
+            showConfetti();
+          }
+        }, 300);
+
+      } catch (error) {
+        console.error('Error deleting recipe:', error);
+        alert('Terjadi kesalahan saat menghapus resep. Silakan coba lagi.');
+      }
     }
 
     function showConfetti() {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -191,15 +191,18 @@
             })
           });
 
-          const message = await response.text();
           if (response.ok) {
+            const user = await response.json();
             localStorage.setItem("cookeasyUser", JSON.stringify({
-              email: emailInput.value.trim(),
+              id: user.id,
+              username: user.username,
+              email: user.email,
               authMethod: "email",
               remember: document.getElementById('remember').checked
             }));
             window.location.href = "index.html";
           } else {
+            const message = await response.text();
             alert("Login gagal: " + message);
           }
         } catch (error) {
@@ -215,8 +218,11 @@
 
     function socialLogin(provider) {
       alert(`Sedang mengarahkan ke login ${provider}...\n\nIni hanya simulasi.`);
+      const userId = Math.floor(Math.random() * 10000);
       localStorage.setItem('cookeasyUser', JSON.stringify({
-        email: `user_${Math.floor(Math.random() * 10000)}@${provider}.com`,
+        id: userId,
+        username: `${provider}User${userId}`,
+        email: `user_${userId}@${provider}.com`,
         authMethod: provider
       }));
       setTimeout(() => {

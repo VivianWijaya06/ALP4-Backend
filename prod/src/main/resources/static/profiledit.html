@@ -80,7 +80,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const user = JSON.parse(localStorage.getItem('cookeasyUser')) || {};
+      const userDataString = localStorage.getItem('cookeasyUser');
+      const user = userDataString ? JSON.parse(userDataString) : {};
       document.getElementById('username').value = user.username || '';
       document.getElementById('email').value = user.email || '';
 
@@ -109,7 +110,8 @@
       const currentPassword = document.getElementById('currentPassword').value;
       const newPassword = document.getElementById('newPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-      const storedUser = JSON.parse(localStorage.getItem('cookeasyUser')) || {};
+      const userDataString = localStorage.getItem('cookeasyUser');
+      const storedUser = userDataString ? JSON.parse(userDataString) : {};
 
       if (!username || !email) return showAlert('error', 'Mohon isi semua data');
 

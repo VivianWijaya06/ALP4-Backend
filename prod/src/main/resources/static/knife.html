@@ -122,11 +122,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const userData = localStorage.getItem('cookeasyUser');
+    const userDataString = localStorage.getItem('cookeasyUser');
+    const userData = userDataString ? JSON.parse(userDataString) : null;
     const userMenu = document.getElementById('userMenu');
 
     if(userData) {
-        const user = JSON.parse(userData);
+        // Parse userData safely
         userMenu.innerHTML = `
           <div class="relative group inline-block text-left">
           <button class="bg-[#803f22] text-white px-4 py-2 rounded-md flex items-center justify-between gap-2 hover:bg-[#5c2c14] transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#a8552f]">

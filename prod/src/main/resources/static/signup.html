@@ -188,15 +188,17 @@
             })
           });
 
-          const message = await response.text();
           if (response.ok) {
+            const user = await response.json();
             localStorage.setItem('cookeasyUser', JSON.stringify({
-              name: nameInput.value.trim(),
-              email: emailInput.value.trim(),
+              id: user.id,
+              username: user.username,
+              email: user.email,
               authMethod: 'email'
             }));
             window.location.href = 'index.html';
           } else {
+            const message = await response.text();
             alert('Pendaftaran gagal: ' + message);
           }
         } catch (err) {
