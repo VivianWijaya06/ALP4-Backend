@@ -236,11 +236,125 @@
       });
     }
 
-    function toggleSave() {
-      saved = !saved;
+    async function toggleSave() {
+      const userData = JSON.parse(localStorage.getItem('cookeasyUser'));
+      
+      if (!userData || !userData.id) {
+        alert('Anda harus login terlebih dahulu untuk menyimpan resep.');
+        return;
+      }
+
       const btn = document.getElementById("saveBtn");
-      btn.textContent = saved ? "💾 Saved" : "💾";
-      btn.classList.toggle("bg-green-100", saved);
+      
+      // Show loading state
+      btn.textContent = "⏳";
+      btn.disabled = true;
+      btn.style.backgroundColor = "#f3f4f6";
+      
+      try {
+        if (!saved) {
+          // Save the recipe
+          await saveRecipeToBackend(userData, "Salad Segar");
+          saved = true;
+          btn.textContent = "✅ Tersimpan";
+          btn.style.backgroundColor = "#dcfce7";
+          btn.style.color = "#166534";
+          setTimeout(() => {
+            btn.textContent = "💾 Tersimpan";
+          }, 2000);
+        } else {
+          // Recipe already saved
+          alert('Resep sudah tersimpan sebelumnya!');
+          btn.textContent = "💾 Tersimpan";
+          btn.style.backgroundColor = "#dcfce7";
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+        btn.textContent = "❌ Error";
+        btn.style.backgroundColor = "#fecaca";
+        btn.style.color = "#dc2626";
+        setTimeout(() => {
+          btn.textContent = "💾";
+          btn.style.backgroundColor = "";
+          btn.style.color = "";
+        }, 3000);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function saveRecipeToBackend(userData, recipeName) {
+      try {
+        console.log('Attempting to save recipe:', recipeName, 'for user:', userData.id);
+        
+        const recipeId = await getRecipeIdByTitle(recipeName);
+        console.log('Found recipe ID:', recipeId);
+        
+        const payload = {
+          user: { id: userData.id },
+          recipe: { id: recipeId }
+        };
+
+        console.log('Sending payload:', payload);
+
+        const res = await fetch('http://localhost:8080/api/saved', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const responseText = await res.text();
+        console.log('Server response:', res.status, responseText);
+
+        if (res.status === 409) {
+          throw new Error('DUPLICATE');
+        } else if (!res.ok) {
+          throw new Error(`Server error: ${res.status} - ${responseText}`);
+        }
+
+        console.log('✅ Recipe saved successfully!');
+        alert('Resep berhasil disimpan! 🎉');
+        
+      } catch (err) {
+        console.error('❌ Save error:', err);
+        if (err.message === 'DUPLICATE') {
+          throw new Error('Resep sudah tersimpan sebelumnya!');
+        } else {
+          throw new Error('Gagal menyimpan resep. Silakan coba lagi.');
+        }
+      }
+    }
+
+    async function getRecipeIdByTitle(title) {
+      try {
+        console.log('🔍 Searching for recipe:', title);
+        
+        const res = await fetch('http://localhost:8080/api/recipes');
+        if (!res.ok) {
+          throw new Error(`Failed to fetch recipes: ${res.status}`);
+        }
+        
+        const recipes = await res.json();
+        console.log('📋 Available recipes:', recipes.map(r => r.title));
+        
+        // Case-insensitive search
+        const recipe = recipes.find(r => 
+          r.title.toLowerCase().trim() === title.toLowerCase().trim()
+        );
+        
+        if (!recipe) {
+          console.error('❌ Recipe not found:', title);
+          console.log('Available titles:', recipes.map(r => r.title));
+          throw new Error(`Recipe "${title}" not found in database`);
+        }
+        
+        console.log('✅ Found recipe:', recipe);
+        return recipe.id;
+        
+      } catch (err) {
+        console.error('❌ Error getting recipe ID:', err);
+        throw new Error('Gagal mencari resep. Silakan coba lagi.');
+      }
     }
   </script>
 

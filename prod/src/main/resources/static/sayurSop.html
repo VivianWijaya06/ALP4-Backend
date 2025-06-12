@@ -223,11 +223,128 @@
       });
     }
 
-    function toggleSave() {
-      saved = !saved;
-      const btn = document.getElementById("saveBtn");
-      btn.textContent = saved ? "💾 Saved" : "💾";
-      btn.classList.toggle("bg-green-100", saved);
+    async function toggleSave() {
+      const currentUserDataString = localStorage.getItem('cookeasyUser');
+      const currentUserData = currentUserDataString ? JSON.parse(currentUserDataString) : null;
+      
+      console.log('Save button clicked for recipe: Sayur Sop Segar');
+      console.log('Current user data:', currentUserData);
+
+      if (!currentUserData) {
+        console.log('No user data found - user not logged in');
+        alert('Anda harus login terlebih dahulu untuk menyimpan resep.');
+        return;
+      }
+
+      if (!currentUserData.id) {
+        console.log('User data missing ID field:', currentUserData);
+        alert('Terjadi kesalahan dengan data pengguna. Silakan login ulang.');
+        return;
+      }
+
+      try {
+        // Show loading state
+        const btn = document.getElementById("saveBtn");
+        const originalText = btn.textContent;
+        btn.textContent = "⏳";
+        btn.disabled = true;
+
+        const recipeId = await getRecipeIdByTitle("Sayur Sop Segar");
+        console.log('Found recipe ID:', recipeId);
+        
+        const payload = {
+          user: { id: currentUserData.id },
+          recipe: { id: recipeId }
+        };
+        console.log('Sending save request with payload:', payload);
+
+        const res = await fetch('http://localhost:8080/api/saved', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        console.log('Save response status:', res.status);
+        
+        if (res.status === 409) {
+          // Recipe already saved
+          alert('Resep sudah tersimpan sebelumnya!');
+          btn.textContent = "✅";
+          btn.classList.remove("hover:bg-green-100");
+          btn.classList.add("bg-green-100");
+          return;
+        }
+        
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.log('Save error response:', errorText);
+          throw new Error('Gagal menyimpan resep: ' + errorText);
+        }
+
+        console.log('Recipe saved successfully!');
+        alert('Resep berhasil disimpan!');
+        btn.textContent = "✅";
+        btn.classList.remove("hover:bg-green-100");
+        btn.classList.add("bg-green-100");
+        
+      } catch (err) {
+        console.error('Save error:', err);
+        alert('Terjadi kesalahan saat menyimpan: ' + err.message);
+        
+        // Reset button state on error
+        const btn = document.getElementById("saveBtn");
+        btn.textContent = "💾";
+        btn.disabled = false;
+      }
+    }
+
+    async function saveRecipeToBackend(userData, recipeName) {
+      try {
+        const recipeId = await getRecipeIdByTitle(recipeName);
+        const payload = {
+          user: { id: userData.id },
+          recipe: { id: recipeId }
+        };
+
+        const res = await fetch('http://localhost:8080/api/saved', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Gagal menyimpan resep.');
+        console.log('Resep berhasil disimpan!');
+      } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan saat menyimpan.');
+      }
+    }
+
+    async function getRecipeIdByTitle(title) {
+      try {
+        console.log('Fetching recipes from API...');
+        const res = await fetch('http://localhost:8080/api/recipes');
+        if (!res.ok) {
+          console.log('Failed to fetch recipes, status:', res.status);
+          throw new Error('Gagal mengambil daftar resep');
+        }
+        
+        const recipes = await res.json();
+        console.log('Available recipes:', recipes);
+        console.log('Looking for recipe with title:', title);
+        
+        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.toLowerCase());
+        console.log('Found recipe:', found);
+        
+        if (!found) {
+          console.log('Recipe not found in database');
+          throw new Error('Resep tidak ditemukan di database');
+        }
+        return found.id;
+      } catch (err) {
+        console.error('Error in getRecipeIdByTitle:', err);
+        throw err;
+      }
     }
   </script>
 
