@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cookeasy.prod.model.Recipe;
-import com.cookeasy.prod.repository.RecipeRepository;
+import com.cookeasy.prod.service.RecipeService;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -20,20 +20,20 @@ import com.cookeasy.prod.repository.RecipeRepository;
 public class RecipeController {
 
     @Autowired
-    private RecipeRepository recipeRepository;
+    private RecipeService recipeService;
 
     @GetMapping
     public List<Recipe> getRecipes(@RequestParam(value = "title", required = false) String title) {
         if (title != null && !title.isEmpty()) {
-            return recipeRepository.findByTitleContainingIgnoreCase(title);
+            return recipeService.findByTitleContainingIgnoreCase(title);
         }
-        return recipeRepository.findAll();
+        return recipeService.getAllRecipes();
     }
 
     @PostMapping
     public Recipe createRecipe(@RequestBody Recipe recipe) {
         System.out.println("Menerima request resep baru: " + recipe);
-        Recipe savedRecipe = recipeRepository.save(recipe);
+        Recipe savedRecipe = recipeService.saveRecipe(recipe);
         System.out.println("Resep berhasil disimpan dengan ID: " + savedRecipe.getId());
         return savedRecipe;
     }

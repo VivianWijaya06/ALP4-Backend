@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cookeasy.prod.model.Recipe;
 import com.cookeasy.prod.model.SaveRecipe;
 import com.cookeasy.prod.model.User;
-import com.cookeasy.prod.repository.RecipeRepository;
 import com.cookeasy.prod.repository.SaveRecipeRepository;
 import com.cookeasy.prod.repository.UserRepository;
+import com.cookeasy.prod.service.RecipeService;
 
 @RestController
 @RequestMapping("/api/saved")
@@ -35,7 +35,7 @@ public class SavedRecipeController {
     private UserRepository userRepository;
     
     @Autowired
-    private RecipeRepository recipeRepository;
+    private RecipeService recipeService;
 
     @GetMapping("/{userId}")
     public List<SaveRecipe> getSavedRecipes(@PathVariable Long userId) {
@@ -62,7 +62,9 @@ public class SavedRecipeController {
             User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
             
-            Recipe recipe = recipeRepository.findById(recipeId)
+            Recipe recipe = recipeService.getAllRecipes().stream()
+                .filter(r -> r.getId().equals(recipeId))
+                .findFirst()
                 .orElseThrow(() -> new RuntimeException("Recipe not found with id: " + recipeId));
             
             // Check if this recipe is already saved by this user

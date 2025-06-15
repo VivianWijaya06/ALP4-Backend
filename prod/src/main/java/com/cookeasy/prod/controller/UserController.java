@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cookeasy.prod.model.User;
-import com.cookeasy.prod.repository.UserRepository;
+import com.cookeasy.prod.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,54 +23,50 @@ import com.cookeasy.prod.repository.UserRepository;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email sudah digunakan.");
+        try {
+            User saved = userService.register(user);
+            return ResponseEntity.ok(saved);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
-
-        // Simpan user baru
-        System.out.println("Register user baru: " + user);
-        User saved = userRepository.save(user);
-        System.out.println("User berhasil disimpan dengan ID: " + saved.getId());
-        return ResponseEntity.ok(saved);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
-        String email = loginData.get("email");
-        String password = loginData.get("password");
-
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-                return ResponseEntity.ok(user);
+        try {
+            User user = userService.login(loginData.get("email"), loginData.get("password"));
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            String msg = e.getMessage();
+            if ("Password salah".equals(msg)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(msg);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password salah");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
             }
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email tidak ditemukan");
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
-        User user = userRepository.findByEmail(updatedUser.getEmail());
-        if (user != null) {
-            user.setUsername(updatedUser.getUsername());
-            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-                user.setPassword(updatedUser.getPassword());
-            }
-            return ResponseEntity.ok(userRepository.save(user));
+        try {
+            User user = userService.updateProfile(updatedUser);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User tidak ditemukan");
     }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) return ResponseEntity.ok(user);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User tidak ditemukan");
+        try {
+            User user = userService.findByEmail(email);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
