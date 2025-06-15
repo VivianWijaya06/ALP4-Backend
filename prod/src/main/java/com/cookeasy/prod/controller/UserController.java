@@ -69,4 +69,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/check-email/{email}")
+    public ResponseEntity<?> checkEmailExists(@PathVariable String email) {
+        boolean exists = userService.emailExists(email);
+        return ResponseEntity.ok(Map.of("exists", exists));
+    }
 }

@@ -40,4 +40,8 @@ public class UserService {
         if (user == null) throw new IllegalArgumentException("User tidak ditemukan");
         return user;
     }
+
+    public boolean emailExists(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
 }

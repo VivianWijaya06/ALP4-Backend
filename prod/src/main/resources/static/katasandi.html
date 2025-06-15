@@ -67,8 +67,21 @@
       } else {
         error.textContent = '';
         email.classList.remove('border-red-500');
-        alert('Tautan reset kata sandi telah dikirim ke email Anda (simulasi).');
-        window.location.href = 'signin.html';
+        fetch(`http://localhost:8080/api/users/check-email/${encodeURIComponent(emailVal)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.exists) {
+              alert('Tautan reset kata sandi telah dikirim ke email Anda (Copy link ini sebagai simulasi http://localhost:8080/profiledit.html).');
+              window.location.href = 'signin.html';
+            } else {
+              error.textContent = 'Email tidak ditemukan';
+              email.classList.add('border-red-500');
+            }
+          })
+          .catch(() => {
+            error.textContent = 'Terjadi kesalahan pada server.';
+            email.classList.add('border-red-500');
+          });
       }
     });
   </script>
