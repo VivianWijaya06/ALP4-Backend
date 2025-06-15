@@ -287,7 +287,7 @@
       try {
         console.log('Attempting to save recipe:', recipeName, 'for user:', userData.id);
         
-        const recipeId = await getRecipeIdByTitle(recipeName);
+        const recipeId = await getRecipeIdByTitle("Salad Segar");
         console.log('Found recipe ID:', recipeId);
         
         const payload = {
@@ -327,33 +327,25 @@
 
     async function getRecipeIdByTitle(title) {
       try {
-        console.log('🔍 Searching for recipe:', title);
-        
+        console.log('Fetching recipes from API...');
         const res = await fetch('http://localhost:8080/api/recipes');
         if (!res.ok) {
-          throw new Error(`Failed to fetch recipes: ${res.status}`);
+          console.log('Failed to fetch recipes, status:', res.status);
+          throw new Error('Gagal mengambil daftar resep');
         }
-        
         const recipes = await res.json();
-        console.log('📋 Available recipes:', recipes.map(r => r.title));
-        
-        // Case-insensitive search
-        const recipe = recipes.find(r => 
-          r.title.toLowerCase().trim() === title.toLowerCase().trim()
-        );
-        
-        if (!recipe) {
-          console.error('❌ Recipe not found:', title);
-          console.log('Available titles:', recipes.map(r => r.title));
-          throw new Error(`Recipe "${title}" not found in database`);
+        console.log('Available recipes:', recipes);
+        console.log('Looking for recipe with title:', title);
+        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.toLowerCase());
+        console.log('Found recipe:', found);
+        if (!found) {
+          console.log('Recipe not found in database');
+          throw new Error('Resep tidak ditemukan di database');
         }
-        
-        console.log('✅ Found recipe:', recipe);
-        return recipe.id;
-        
+        return found.id;
       } catch (err) {
-        console.error('❌ Error getting recipe ID:', err);
-        throw new Error('Gagal mencari resep. Silakan coba lagi.');
+        console.error('Error in getRecipeIdByTitle:', err);
+        throw err;
       }
     }
   </script>

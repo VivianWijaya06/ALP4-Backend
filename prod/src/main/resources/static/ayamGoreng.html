@@ -246,7 +246,7 @@
         btn.textContent = "⏳";
         btn.disabled = true;
 
-        const recipeId = await getRecipeIdByTitle("Ayam Goreng Crispy");
+        const recipeId = await getRecipeIdByTitle("Ayam Goreng");
         console.log('Found recipe ID:', recipeId);
         
         const payload = {
@@ -325,14 +325,11 @@
           console.log('Failed to fetch recipes, status:', res.status);
           throw new Error('Gagal mengambil daftar resep');
         }
-        
         const recipes = await res.json();
         console.log('Available recipes:', recipes);
         console.log('Looking for recipe with title:', title);
-        
         const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.toLowerCase());
         console.log('Found recipe:', found);
-        
         if (!found) {
           console.log('Recipe not found in database');
           throw new Error('Resep tidak ditemukan di database');

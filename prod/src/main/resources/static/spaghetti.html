@@ -318,13 +318,25 @@
 
     async function getRecipeIdByTitle(title) {
       try {
+        console.log('Fetching recipes from API...');
         const res = await fetch('http://localhost:8080/api/recipes');
+        if (!res.ok) {
+          console.log('Failed to fetch recipes, status:', res.status);
+          throw new Error('Gagal mengambil daftar resep');
+        }
         const recipes = await res.json();
-        const recipe = recipes.find(r => r.title === title);
-        return recipe ? recipe.id : 1; // Default to 1 if not found
+        console.log('Available recipes:', recipes);
+        console.log('Looking for recipe with title:', title);
+        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.toLowerCase());
+        console.log('Found recipe:', found);
+        if (!found) {
+          console.log('Recipe not found in database');
+          throw new Error('Resep tidak ditemukan di database');
+        }
+        return found.id;
       } catch (err) {
-        console.error('Error getting recipe ID:', err);
-        return 1; // Default recipe ID
+        console.error('Error in getRecipeIdByTitle:', err);
+        throw err;
       }
     }
   </script>

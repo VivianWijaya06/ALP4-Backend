@@ -32,7 +32,9 @@ public class UserController {
         }
 
         // Simpan user baru
+        System.out.println("Register user baru: " + user);
         User saved = userRepository.save(user);
+        System.out.println("User berhasil disimpan dengan ID: " + saved.getId());
         return ResponseEntity.ok(saved);
     }
 

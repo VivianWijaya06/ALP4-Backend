@@ -31,6 +31,15 @@
         transform: translateY(0);
       }
     }
+
+    .floating-btn {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
     
     .scale-in {
       animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -213,6 +222,26 @@
             </div>
           </div>
         </a>
+
+        <a href="add-recipe.html" class="group block">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-[0_6px_20px_rgba(128,63,34,0.4)] hover:-translate-y-1 duration-500 transition-transform">
+            <div class="h-48 bg-gradient-to-r from-[#ffe1d8] to-[#fff3ec] flex items-center justify-center">
+              <img src="write.jpeg" alt="Gambar Fitur Resep" class="w-full h-full object-cover scale-in delay-4">
+            </div>
+            <div class="px-6 pt-6 pb-3">
+              <h3 class="text-xl font-semibold mb-2 text-[#803f22] group-hover:text-orange-500 transition">Tulis Inspirasi Resep anda</h3>
+              <p class="text-gray-600 mb-4">Bagikanlah pengalaman dan idemu kepada dunia</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs">Ide</span>
+                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs">Tulis</span>
+              </div>
+              <div class="flex justify-end">
+                <span class="text-accent hover:text-primary font-medium">Lihat Detail →</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -221,13 +250,13 @@
     <input
       type="text"
       id="name"
-      placeholder="Your Name"
+      placeholder="Nama Anda"
       class="w-full p-3 border rounded mb-4 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
       required
     />
     <textarea
       id="message"
-      placeholder="Write a Testimonial..."
+      placeholder="Tuliskan Sebuah Testimoni..."
       class="w-full p-3 border rounded mb-4 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
       required
     ></textarea>
@@ -237,7 +266,7 @@
       class="bg-[#803f22] text-white px-6 py-2 rounded hover:bg-[#6a341b] transition flex items-center justify-center space-x-2 transform hover:scale-105">
       <span id="btnText">Kirim Testimonial</span>
       <span id="loadingSpinner" class="hidden animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></span>
-      <span id="sendingText" class="hidden">Sending...</span>
+      <span id="sendingText" class="hidden">Mengirim...</span>
     </button>
   </form>
     <div id="testimonialList" class="space-y-4 max-w-xl mx-auto mt-6"></div>
@@ -279,11 +308,11 @@
           <ul class="space-y-3 text-sm text-orange-100">
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
+              <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookpedia.com</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
+              <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookpedia</a>
             </li>
             <li class="flex items-start">
               <span class="mr-3 mt-0.5">👍</span>
@@ -298,7 +327,7 @@
   <a href="ChefBot.html" 
     class="floating-btn fixed bottom-6 right-6 bg-[#fff0e6] hover:bg-[#ffd9c2] text-[#5c2c14] border border-[#c79b7e] px-4 py-3 rounded-full shadow-lg transition-all duration-300 flex items-center space-x-2 z-50">
     <span class="text-lg animate-pulse">🤖</span>
-  </a>  
+  </a>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
