@@ -33,6 +33,22 @@ public class ChatBotController {
             return ResponseEntity.badRequest().body("Message is required");
         }
 
+        // Filter: hanya izinkan pertanyaan tentang masakan/makanan
+        String lowerMsg = userMessage.toLowerCase();
+        String[] allowedKeywords = {
+            "masak", "resep", "makanan", "bahan", "dapur", "memasak", "cara membuat", "tips", "kuliner", "menu", "minuman", "kue", "sayur", "ayam", "daging", "ikan", "telur", "nasi", "mie", "bumbu", "oven", "panggang", "goreng", "tumis", "kukus", "boil", "bake", "cook", "food", "recipe", "kitchen"
+        };
+        boolean isFoodRelated = false;
+        for (String keyword : allowedKeywords) {
+            if (lowerMsg.contains(keyword)) {
+                isFoodRelated = true;
+                break;
+            }
+        }
+        if (!isFoodRelated) {
+            return ResponseEntity.ok(Map.of("reply", "Maaf, ChefBot hanya dapat menjawab pertanyaan seputar masakan, makanan, resep, atau dapur."));
+        }
+
         RestTemplate restTemplate = new RestTemplate();
 
         // Gemini expects a "contents" array with "parts" (see Gemini API docs)
