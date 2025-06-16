@@ -49,6 +49,11 @@ public class Recipe {
     @Column(name = "step")
     private List<String> steps;
 
+    @ElementCollection
+    @CollectionTable(name = "recipe_audio_urls", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "audio_url")
+    private List<String> audioUrls;
+
     @Column(length = 1000)
     private String tips;
 
