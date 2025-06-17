@@ -234,7 +234,7 @@
       try {
         if (!saved) {
           // Save the recipe
-          await saveRecipeToBackend(userData, "Telur Dadar Gurih");
+          await saveRecipeToBackend(userData, "Telur Dadar");
           saved = true;
           btn.textContent = "✅ Tersimpan";
           btn.style.backgroundColor = "#dcfce7";
@@ -266,7 +266,7 @@
     async function saveRecipeToBackend(userData, recipeName) {
       try {
         console.log('Attempting to save recipe:', recipeName, 'for user:', userData.id);
-        
+
         const recipeId = await getRecipeIdByTitle("Telur Dadar");
         console.log('Found recipe ID:', recipeId);
         

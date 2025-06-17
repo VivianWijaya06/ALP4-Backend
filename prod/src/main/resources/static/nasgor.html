@@ -1,11 +1,11 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nasi Goreng Sederhana - CookPedia</title>
+  <title>Nasi Goreng Sederhana - CookEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -51,8 +51,10 @@
   <section class="container mx-auto px-4 py-10 max-w-4xl">
     <div class="bg-white rounded shadow p-6 relative">
       <img src="nasgor.jpeg" alt="Nasi Goreng" class="rounded mb-6 w-full object-cover h-64"/>
-      
       <div class="absolute top-4 right-4 flex gap-3">
+        <button id="ttsBtn" class="bg-white border rounded-full p-2 shadow hover:bg-purple-100">
+          🔊
+        </button>
         <button onclick="openShareModal()" class="bg-white border rounded-full p-2 shadow hover:bg-blue-100">
           📤
         </button>
@@ -68,16 +70,32 @@
         <span>🍽️ 1-2 Porsi</span>
       </div>
 
-      <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan-bahan:</h3>
-      <ul class="list-disc list-inside text-gray-700 mb-6">
-        <li>2 piring nasi putih</li>
-        <li>2 butir telur</li>
-        <li>2 siung bawang putih, cincang halus</li>
-        <li>2 sdm kecap manis</li>
-        <li>1/2 sdt garam</li>
-        <li>1 sdm minyak goreng</li>
-        <li>Opsional: irisan daun bawang, cabai, atau ayam suwir</li>
-      </ul>
+      <div class="flex flex-col md:flex-row gap-8 mb-6">
+        <div class="md:w-1/2">
+          <h3 class="text-xl font-semibold text-[#803f22] mb-2">Alat-Alat :</h3>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Wajan</li>
+            <li>Spatula</li>
+            <li>Kompor</li>
+            <li>Sendok/Mangkuk</li>
+            <li>Talenan dan Pisau (untuk mencincang bawang, topping, dll)</li>
+            <li>Piring saji</li>
+          </ul>    
+        </div>
+
+        <div class="md:w-1/2">
+          <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan-bahan:</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6">
+            <li>2 piring nasi putih</li>
+            <li>2 butir telur</li>
+            <li>2 siung bawang putih, cincang halus</li>
+            <li>2 sdm kecap manis</li>
+            <li>1/2 sdt garam</li>
+            <li>1 sdm minyak goreng</li>
+            <li>Opsional: irisan daun bawang, cabai, atau ayam suwir</li>
+          </ul>
+        </div>
+      </div>
 
       <h3 class="text-xl font-semibold text-[#803f22] mb-2">Cara Memasak:</h3>
       <ol class="list-decimal list-inside text-gray-700 space-y-2 mb-6">
@@ -92,7 +110,7 @@
 
       <div class="text-sm text-gray-500">Tips: Gunakan nasi dingin atau sisa nasi semalam agar hasil nasi goreng lebih enak dan tidak lengket.</div>
     </div>
-    <a href="recipe.html" class="inline-block mt-8 px-6 py-2 bg-[#803f22] text-white rounded hover:bg-[#5c2c14] transition">← Kembali ke Panduan Dasar</a>
+    <a href="recipe.html" class="inline-block mt-8 px-6 py-2 bg-[#803f22] text-white rounded hover:bg-[#5c2c14] transition">← Kembali ke Resep</a>
   </section>
 
   <footer class="bg-gradient-to-b from-[#803f22] to-[#5a2d18] text-white pt-12 pb-8 slide-up delay-5">
@@ -128,21 +146,36 @@
         </div>
 
         <div class="md:pl-8">
-          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Kontak</h4>
-          <ul class="space-y-3 text-sm text-orange-100">
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">👍</span>
-              <a href="#" class="hover:text-orange-300">CookPedia Official</a>
-            </li>
-          </ul>
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Hubungi Kami</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fas fa-envelope text-lg w-5"></i>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-sm text-orange-100">cookpedia99@gmail.com</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-instagram text-lg w-5"></i>
+              </a>
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-sm text-orange-100">@cookpedia99</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-facebook-f text-lg w-5"></i>
+              </a>
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-sm text-orange-100">Cook Pedia</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-whatsapp text-lg w-5"></i>
+              </a>
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-sm text-orange-100">+62 813-5635-3033</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -248,7 +281,7 @@
 
         const recipeId = await getRecipeIdByTitle("Nasi Goreng");
         console.log('Found recipe ID:', recipeId);
-        
+
         const payload = {
           user: { id: currentUserData.id },
           recipe: { id: recipeId }
@@ -262,7 +295,7 @@
         });
 
         console.log('Save response status:', res.status);
-        
+
         if (res.status === 409) {
           // Recipe already saved
           alert('Resep sudah tersimpan sebelumnya!');
@@ -271,7 +304,7 @@
           btn.classList.add("bg-green-100");
           return;
         }
-        
+
         if (!res.ok) {
           const errorText = await res.text();
           console.log('Save error response:', errorText);
@@ -283,11 +316,11 @@
         btn.textContent = "✅";
         btn.classList.remove("hover:bg-green-100");
         btn.classList.add("bg-green-100");
-        
+
       } catch (err) {
         console.error('Save error:', err);
         alert('Terjadi kesalahan saat menyimpan: ' + err.message);
-        
+
         // Reset button state on error
         const btn = document.getElementById("saveBtn");
         btn.textContent = "💾";
@@ -334,6 +367,7 @@
     </div>
   </div>
 </body>
+</html>
 </html>
   </div>
 </body>

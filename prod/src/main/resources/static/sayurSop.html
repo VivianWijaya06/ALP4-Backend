@@ -251,7 +251,7 @@
 
         const recipeId = await getRecipeIdByTitle("Sayur Sop");
         console.log('Found recipe ID:', recipeId);
-        
+
         const payload = {
           user: { id: currentUserData.id },
           recipe: { id: recipeId }
@@ -265,7 +265,7 @@
         });
 
         console.log('Save response status:', res.status);
-        
+
         if (res.status === 409) {
           // Recipe already saved
           alert('Resep sudah tersimpan sebelumnya!');
@@ -274,7 +274,7 @@
           btn.classList.add("bg-green-100");
           return;
         }
-        
+
         if (!res.ok) {
           const errorText = await res.text();
           console.log('Save error response:', errorText);
@@ -286,11 +286,11 @@
         btn.textContent = "✅";
         btn.classList.remove("hover:bg-green-100");
         btn.classList.add("bg-green-100");
-        
+
       } catch (err) {
         console.error('Save error:', err);
         alert('Terjadi kesalahan saat menyimpan: ' + err.message);
-        
+
         // Reset button state on error
         const btn = document.getElementById("saveBtn");
         btn.textContent = "💾";

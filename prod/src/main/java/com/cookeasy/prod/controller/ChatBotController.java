@@ -82,7 +82,7 @@ public class ChatBotController {
                     Map candidate = (Map) candidates[0];
                     Map content = (Map) candidate.get("content");
                     java.util.List<Map> parts = (java.util.List<Map>) content.get("parts");
-                    if (parts.size() > 0) {
+                    if (!parts.isEmpty()) {
                         reply = (String) parts.get(0).get("text");
                     }
                 }

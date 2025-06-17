@@ -336,7 +336,7 @@
         const recipes = await res.json();
         console.log('Available recipes:', recipes);
         console.log('Looking for recipe with title:', title);
-        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.toLowerCase());
+        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.trim().toLowerCase());
         console.log('Found recipe:', found);
         if (!found) {
           console.log('Recipe not found in database');

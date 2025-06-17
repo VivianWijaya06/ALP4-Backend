@@ -29,8 +29,6 @@ public class Recipe {
     private String description;
     private String difficulty;
     private int durationInMinutes;
-
-    // New fields
     private String servings;
     private String image;
 

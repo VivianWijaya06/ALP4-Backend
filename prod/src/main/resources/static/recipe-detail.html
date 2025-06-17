@@ -172,6 +172,17 @@
           <span>${difficultyIcon[recipe.difficulty] || ''} ${difficultyText[recipe.difficulty] || ''}</span>
           <span>🍽️ ${recipe.servings || ''}</span>
         </div>
+        ${(recipe.audioUrls && recipe.audioUrls.length > 0) ? `
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-[#803f22] mb-2">Audio Resep:</h3>
+            ${recipe.audioUrls.map(url => `
+              <audio controls class="mb-2 w-full">
+                <source src="${url}" type="audio/mpeg">
+                Browser Anda tidak mendukung audio.
+              </audio>
+            `).join('')}
+          </div>
+        ` : ''}
         <div class="flex flex-col md:flex-row gap-8 mb-6">
           <div class="md:w-1/2">
             <h3 class="text-xl font-semibold text-[#803f22] mb-2">Alat-Alat :</h3>
