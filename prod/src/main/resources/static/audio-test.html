@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Test</title>
+</head>
+<body>
+    <h1>Audio Test Page</h1>
+    
+    <h2>Direct Audio Test</h2>
+    <audio controls>
+        <source src="/api/files/audio/1750144870260_kreasikoe_avenged-sevenfold-dear-god-mp3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <h2>JavaScript Generated Audio Test</h2>
+    <div id="audio-container"></div>
+    
+    <script>
+        // Test audio generation via JavaScript (like in recipe-detail.html)
+        const audioUrl = "/api/files/audio/1750144870260_kreasikoe_avenged-sevenfold-dear-god-mp3.mp3";
+        const audioContainer = document.getElementById('audio-container');
+        
+        const audioHtml = `
+            <audio controls class="mb-2 w-full">
+                <source src="${audioUrl}" type="audio/mpeg">
+                Browser does not support audio.
+            </audio>
+        `;
+        
+        audioContainer.innerHTML = audioHtml;
+        
+        // Test if the audio can load
+        const audio = new Audio(audioUrl);
+        audio.addEventListener('loadstart', () => console.log('Audio loadstart'));
+        audio.addEventListener('loadeddata', () => console.log('Audio loadeddata'));
+        audio.addEventListener('canplay', () => console.log('Audio canplay'));
+        audio.addEventListener('error', (e) => console.error('Audio error:', e));
+        
+        console.log('Audio URL:', audioUrl);
+    </script>
+</body>
+</html>

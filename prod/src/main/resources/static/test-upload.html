@@ -1,0 +1,60 @@
+<!-- Test file for image upload -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Upload</title>
+</head>
+<body>
+    <h1>Test Image Upload</h1>
+    <form id="testForm">
+        <input type="text" id="title" value="Test Recipe" placeholder="Title">
+        <input type="text" id="description" value="Test Description" placeholder="Description">
+        <input type="text" id="difficulty" value="Mudah" placeholder="Difficulty">
+        <input type="number" id="duration" value="15" placeholder="Duration">
+        <input type="text" id="servings" value="4" placeholder="Servings">
+        <input type="file" id="image" accept="image/*">
+        <button type="button" onclick="testUpload()">Test Upload</button>
+    </form>
+
+    <script>
+        async function testUpload() {
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('difficulty', document.getElementById('difficulty').value);
+            formData.append('durationInMinutes', document.getElementById('duration').value);
+            formData.append('servings', document.getElementById('servings').value);
+            
+            const imageFile = document.getElementById('image').files[0];
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+            
+            // Add required fields with empty values
+            formData.append('tools', JSON.stringify(['Test Tool']));
+            formData.append('ingredients', JSON.stringify(['Test Ingredient']));
+            formData.append('steps', JSON.stringify(['Test Step']));
+            
+            try {
+                const response = await fetch('/api/recipes/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Upload successful:', result);
+                    alert('Upload successful! Image URL: ' + result.image);
+                } else {
+                    const error = await response.text();
+                    console.error('Upload failed:', error);
+                    alert('Upload failed: ' + error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
