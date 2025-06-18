@@ -42,7 +42,7 @@ ALP4-Backend/
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-org/cookeasy-backend.git
+    git clone https://github.com/VivianWijaya06/ALP4-Backend.git
     cd cookeasy-backend/ALP4-Backend/prod
     ```
 
