@@ -13,7 +13,6 @@ CookEasy is a Java Spring Boot application designed to support a cooking assista
 ## Project Structure
 
 ```
-
 ALP4-Backend/
 └── prod/
 ├── src/
@@ -29,7 +28,6 @@ ALP4-Backend/
 │           ├── static/                 # HTML pages and images
 │           └── application.properties
 └── OpenAI\_Integration\_README.md      # AI integration details
-
 ```
 
 ## Prerequisites
