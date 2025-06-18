@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Cooking with Music - CookPedia</title>
+  <title>Cooking with Music - CookPedia</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <style>
@@ -66,8 +66,8 @@
 
   <section class="container mx-auto px-4 py-8">
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-[#803f22] mb-4">Rekomendasi Masakan Harian</h2>
-      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Temukan inspirasi masakan harian dengan playlist musik yang cocok untuk menemani aktivitas memasak Anda!</p>
+      <h2 class="text-4xl font-bold text-[#803f22] mb-4">Rekomendasi Masakan + Musik</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Temukan inspirasi masakan dengan playlist musik yang berubah setiap kali Anda berkunjung untuk menemani aktivitas memasak Anda!</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 mb-12">
@@ -135,48 +135,10 @@
       <div class="bg-white rounded-xl shadow-lg overflow-hidden music-player">
         <div class="p-6">
           <h3 class="text-2xl font-semibold text-[#803f22] mb-4">Playlist Memasak</h3>
-          <p class="text-gray-600 mb-6">Putar musik berikut untuk menemani waktu memasak Anda</p>
+          <p class="text-gray-600 mb-6">Putar musik berikut untuk menemani waktu memasak Anda. Playlist berubah setiap kali Anda me-refresh halaman!</p>
           
-          <div class="bg-gray-50 rounded-lg p-4 mb-4">
-            <div class="flex items-center mb-3">
-              <img src="https://img.icons8.com/color/48/000000/spotify.png" alt="Spotify" class="w-10 h-10 mr-3">
-              <div>
-                <h4 class="font-medium">Jazz for Cooking</h4>
-                <p class="text-gray-500 text-sm">Lagu jazz santai untuk memasak</p>
-              </div>
-            </div>
-            <audio controls class="w-full mt-2">
-              <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-              Browser Anda tidak mendukung elemen audio.
-            </audio>
-          </div>
-          
-          <div class="bg-gray-50 rounded-lg p-4 mb-4">
-            <div class="flex items-center mb-3">
-              <img src="https://img.icons8.com/color/48/000000/youtube-music.png" alt="YouTube Music" class="w-10 h-10 mr-3">
-              <div>
-                <h4 class="font-medium">Indonesian Traditional</h4>
-                <p class="text-gray-500 text-sm">Lagu daerah Indonesia</p>
-              </div>
-            </div>
-            <audio controls class="w-full mt-2">
-              <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-              Browser Anda tidak mendukung elemen audio.
-            </audio>
-          </div>
-          
-          <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex items-center mb-3">
-              <img src="https://img.icons8.com/color/48/000000/apple-music.png" alt="Apple Music" class="w-10 h-10 mr-3">
-              <div>
-                <h4 class="font-medium">Classical Relax</h4>
-                <p class="text-gray-500 text-sm">Musik klasik untuk konsentrasi</p>
-              </div>
-            </div>
-            <audio controls class="w-full mt-2">
-              <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
-              Browser Anda tidak mendukung elemen audio.
-            </audio>
+          <div id="music-player-container">
+            <!-- Dynamic songs will be loaded here -->
           </div>
         </div>
       </div>
@@ -259,6 +221,7 @@
     <span class="text-lg animate-pulse">🤖</span>
   </a>  
 
+  <script src="js/daily-songs.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
     const userData = localStorage.getItem('cookeasyUser');
@@ -290,32 +253,6 @@
       });
     }
   });
-  
-    // Script untuk mengontrol audio
-    document.addEventListener('DOMContentLoaded', function() {
-      const audioPlayers = document.querySelectorAll('audio');
-      
-      // Hanya satu audio yang bisa diputar dalam satu waktu
-      audioPlayers.forEach(player => {
-        player.addEventListener('play', function() {
-          audioPlayers.forEach(otherPlayer => {
-            if (otherPlayer !== player && !otherPlayer.paused) {
-              otherPlayer.pause();
-            }
-          });
-        });
-      });
-      
-      // Simpan preferensi volume ke localStorage
-      audioPlayers.forEach(player => {
-        // Ambil volume yang disimpan atau set default 0.7
-        player.volume = localStorage.getItem('audioVolume') || 0.7;
-        
-        player.addEventListener('volumechange', function() {
-          localStorage.setItem('audioVolume', player.volume);
-        });
-      });
-    });
   </script>
 </body>
 </html>

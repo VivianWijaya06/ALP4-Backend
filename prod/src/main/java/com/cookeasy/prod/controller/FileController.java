@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +33,11 @@ public class FileController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null) {
+            return ResponseEntity.badRequest().body("File name is required");
+        }
+        String filename = StringUtils.cleanPath(originalFilename);
         File dir = new File(uploadDir);
         if (!dir.exists()) dir.mkdirs();
         Path filePath = Paths.get(uploadDir, filename);
@@ -129,5 +135,115 @@ public class FileController {
                 .headers(headers)
                 .body(buffer);
         }
+    }
+
+    @GetMapping("/songs/{filename:.+}")
+    public ResponseEntity<?> serveSong(@PathVariable String filename, 
+                                      @RequestHeader(value = "Range", required = false) String range) throws IOException {
+        // Serve songs from static/songs folder
+        Path filePath = Paths.get("src/main/resources/static/songs", filename);
+        if (!Files.exists(filePath)) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        String contentType = Files.probeContentType(filePath);
+        if (contentType == null) {
+            contentType = "audio/mpeg";
+        }
+        
+        File file = filePath.toFile();
+        long fileLength = file.length();
+        
+        if (range == null) {
+            // Return the whole file
+            return ResponseEntity.ok()
+                .header("Content-Type", contentType)
+                .header("Accept-Ranges", "bytes")
+                .header("Content-Length", String.valueOf(fileLength))
+                .body(Files.readAllBytes(filePath));
+        }
+        
+        // Handle Range requests
+        String[] ranges = range.replace("bytes=", "").split("-");
+        long start = 0;
+        long end = fileLength - 1;
+        
+        if (ranges.length > 0 && !ranges[0].isEmpty()) {
+            start = Long.parseLong(ranges[0]);
+        }
+        if (ranges.length > 1 && !ranges[1].isEmpty()) {
+            end = Long.parseLong(ranges[1]);
+        }
+        
+        if (start > end || start >= fileLength) {
+            return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
+                .header("Content-Range", "bytes */" + fileLength)
+                .build();
+        }
+        
+        if (end >= fileLength) {
+            end = fileLength - 1;
+        }
+        
+        long contentLength = end - start + 1;
+        
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
+            byte[] buffer = new byte[(int) contentLength];
+            randomAccessFile.seek(start);
+            randomAccessFile.read(buffer);
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", contentType);
+            headers.add("Accept-Ranges", "bytes");
+            headers.add("Content-Length", String.valueOf(contentLength));
+            headers.add("Content-Range", "bytes " + start + "-" + end + "/" + fileLength);
+            
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                .headers(headers)
+                .body(buffer);
+        }
+    }
+
+    @GetMapping("/songs/list")
+    public ResponseEntity<List<String>> listSongs() {
+        List<String> songs = new ArrayList<>();
+        
+        // First try to get songs from static/songs folder
+        Path songsDir = Paths.get("src/main/resources/static/songs");
+        
+        if (Files.exists(songsDir) && Files.isDirectory(songsDir)) {
+            try {
+                Files.list(songsDir)
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().toLowerCase().endsWith(".mp3"))
+                    .forEach(path -> {
+                        String filename = path.getFileName().toString();
+                        songs.add("/api/files/songs/" + filename);
+                    });
+            } catch (IOException e) {
+                // Log error but continue
+            }
+        }
+        
+        // If no songs found in static folder, fallback to uploads/audio
+        if (songs.isEmpty()) {
+            Path audioDir = Paths.get(uploadDir, "audio");
+            
+            if (Files.exists(audioDir) && Files.isDirectory(audioDir)) {
+                try {
+                    Files.list(audioDir)
+                        .filter(Files::isRegularFile)
+                        .filter(path -> path.toString().toLowerCase().endsWith(".mp3"))
+                        .forEach(path -> {
+                            String filename = path.getFileName().toString();
+                            songs.add("/api/files/audio/" + filename);
+                        });
+                } catch (IOException e) {
+                    // Log error but continue
+                }
+            }
+        }
+        
+        return ResponseEntity.ok(songs);
     }
 }
