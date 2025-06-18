@@ -67,62 +67,17 @@
   <section class="container mx-auto px-4 py-8">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold text-[#803f22] mb-4">Rekomendasi Masakan + Musik</h2>
-      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Temukan inspirasi masakan dengan playlist musik yang berubah setiap kali Anda berkunjung untuk menemani aktivitas memasak Anda!</p>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Temukan inspirasi masakan dan playlist musik yang berubah setiap kali Anda berkunjung untuk menemani aktivitas memasak Anda!</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 mb-12">
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
           <h3 class="text-2xl font-semibold text-[#803f22] mb-4">Menu Hari Ini</h3>
+          <p class="text-gray-600 mb-6">Menu yang berubah setiap kali Anda berkunjung untuk memberikan inspirasi baru!</p>
           
-          <div class="space-y-6">
-            <a href="nasgor.html" class="flex items-start hover:bg-gray-50 rounded-lg p-2 -mx-2 transition-all duration-200">
-              <div>
-                <h4 class="font-semibold text-lg">Nasi Goreng Spesial</h4>
-                <p class="text-gray-600 text-sm">Dengan telur mata sapi, ayam suwir, dan kerupuk</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">40 menit</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">Normal</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">4 porsi</span>
-                </div>
-              </div>
-            </a>
-            
-            <a href="SupAyamJahe.html" class="flex items-start hover:bg-gray-50 rounded-lg p-2 -mx-2 transition-all duration-200">
-              <div>
-                <h4 class="font-semibold text-lg">Sup Ayam Jahe</h4>
-                <p class="text-gray-600 text-sm">Hangatkan badan dengan kuah kaldu ayam dan jahe segar</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">45 menit</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">Sedang</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">6 porsi</span>
-                </div>
-              </div>
-            </a>
-            
-            <a href="salad.html" class="flex items-start hover:bg-gray-50 rounded-lg p-2 -mx-2 transition-all duration-200">
-              <div>
-                <h4 class="font-semibold text-lg">Salad Segar</h4>
-                <p class="text-gray-600 text-sm">Campuran sayuran segar dengan dressing lemon-madu</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">15 menit</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">Mudah</span>
-                  <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">2 porsi</span>
-                </div>
-              </div>
-            </a>
-
-            <a href="pancake.html" class="flex items-start hover:bg-gray-50 rounded-lg p-2 -mx-2 transition-all duration-200">
-                <div>
-                  <h4 class="font-semibold text-lg">Pancake</h4>
-                  <p class="text-gray-600 text-sm">Resep pancake klasik yang lembut dan mengembang</p>
-                  <div class="mt-2 flex flex-wrap gap-2">
-                    <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">15 menit</span>
-                    <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">Mudah</span>
-                    <span class="bg-[#fff4ef] text-[#803f22] px-2 py-1 rounded text-xs">2 porsi</span>
-                  </div>
-                </div>
-              </a>
+          <div id="daily-menu-container" class="space-y-6">
+            <!-- Dynamic menu items will be loaded here -->
           </div>
           
           
@@ -222,6 +177,7 @@
   </a>  
 
   <script src="js/daily-songs.js"></script>
+  <script src="js/daily-menu.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
     const userData = localStorage.getItem('cookeasyUser');
