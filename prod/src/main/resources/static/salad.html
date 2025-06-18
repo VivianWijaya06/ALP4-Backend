@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Salad Segar - CookPedia</title>
+  <title>Salad Segar - CookEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -48,16 +50,6 @@
     </div>
   </nav>
 
-  <!-- Tombol Back yang lebih menonjol -->
-  <div class="container mx-auto px-6 py-4">
-    <a href="index.html" class="bg-[#803f22] text-white px-4 py-2 rounded-lg hover:bg-[#6a3418] transition-all duration-300 inline-flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-    </svg>
-    Back to Homepage
-    </a>
-</div>
-
   <section class="container mx-auto px-4 py-10 max-w-4xl">
     <div class="bg-white rounded shadow p-6 relative">
       <img src="salad.jpeg" alt="Salad Segar" class="rounded mb-6 w-full object-cover h-64"/>
@@ -78,36 +70,54 @@
         <span>🍽️ 2 Porsi</span>
       </div>
 
-      <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan-bahan:</h3>
-      <ul class="list-disc list-inside text-gray-700 mb-6">
-        <li>1 kepala selada romaine atau campuran daun salad, cuci bersih dan potong-potong</li>
-        <li>1 buah tomat, potong dadu</li>
-        <li>1/2 buah timun, potong dadu</li>
-        <li>1/4 buah paprika kuning/merah, iris tipis</li>
-        <li>1/4 buah bawang bombay merah kecil, iris tipis (opsional)</li>
-        <li>50 gr daging ayam panggang atau tahu/tempe, potong dadu (opsional, untuk protein)</li>
-      </ul>
+      <div class="flex flex-col md:flex-row gap-8 mb-6">
+        <div class="md:w-1/2">
+          <h3 class="text-xl font-semibold text-[#803f22] mb-2">Alat-Alat :</h3>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Pisau Dapur Tajam</li>
+            <li>Talenan</li>
+            <li>Salad Spinner</li>
+            <li>Mangkuk Besar</li>
+            <li>Mangkuk Kecil / Jar Kaca</li>
+            <li>Garpu</li>
+            <li>Sendok Salad / Salad Tong </li>
+            <li>Piring Saji atau Mangkuk Salad</li>
+          </ul>
+        </div>
 
-      <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan Dressing Lemon-Madu:</h3>
-      <ul class="list-disc list-inside text-gray-700 mb-6">
-        <li>2 sdm minyak zaitun extra virgin</li>
-        <li>1 sdm perasan lemon segar</li>
-        <li>1 sdt madu</li>
-        <li>1/2 siung bawang putih, cincang halus (opsional)</li>
-        <li>Garam dan merica hitam secukupnya</li>
-      </ul>
+        <div class="md:w-1/2">
+          <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan-bahan:</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6">
+            <li>1 kepala selada romaine atau campuran daun salad, cuci bersih dan potong-potong</li>
+            <li>1 buah tomat, potong dadu</li>
+            <li>1/2 buah timun, potong dadu</li>
+            <li>1/4 buah paprika kuning/merah, iris tipis</li>
+            <li>1/4 buah bawang bombay merah kecil, iris tipis (opsional)</li>
+            <li>50 gr daging ayam panggang atau tahu/tempe, potong dadu (opsional, untuk protein)</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-[#803f22] mb-2">Bahan Dressing Lemon-Madu:</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6">
+            <li>2 sdm minyak zaitun extra virgin</li>
+            <li>1 sdm perasan lemon segar</li>
+            <li>1 sdt madu</li>
+            <li>1/2 siung bawang putih, cincang halus (opsional)</li>
+            <li>Garam dan merica hitam secukupnya</li>
+          </ul>
+        </div>
+      </div>
 
       <h3 class="text-xl font-semibold text-[#803f22] mb-2">Cara Memasak:</h3>
       <ol class="list-decimal list-inside text-gray-700 space-y-2 mb-6">
-        <li>**Siapkan Sayuran:** Dalam mangkuk besar, campurkan selada, tomat, timun, paprika, dan bawang bombay (jika digunakan). Tambahkan protein pilihan Anda jika ada.</li>
-        <li>**Buat Dressing:** Dalam mangkuk kecil, kocok minyak zaitun, perasan lemon, madu, dan bawang putih cincang (jika digunakan) hingga tercampur rata. Bumbui dengan garam dan merica hitam sesuai selera.</li>
-        <li>**Sajikan:** Tuangkan dressing ke atas campuran sayuran. Aduk perlahan hingga semua sayuran terlapisi dressing.</li>
+        <li>Siapkan Sayuran: Dalam mangkuk besar, campurkan selada, tomat, timun, paprika, dan bawang bombay (jika digunakan). Tambahkan protein pilihan Anda jika ada.</li>
+        <li>Buat Dressing: Dalam mangkuk kecil, kocok minyak zaitun, perasan lemon, madu, dan bawang putih cincang (jika digunakan) hingga tercampur rata. Bumbui dengan garam dan merica hitam sesuai selera.</li>
+        <li>Sajikan: Tuangkan dressing ke atas campuran sayuran. Aduk perlahan hingga semua sayuran terlapisi dressing.</li>
         <li>Segera sajikan salad segar Anda sebagai hidangan pembuka, pendamping, atau hidangan utama yang ringan.</li>
       </ol>
 
       <div class="text-sm text-gray-500">Tips: Untuk variasi, tambahkan buah-buahan seperti apel atau stroberi, kacang-kacangan, atau keju feta ke dalam salad Anda. Pastikan sayuran benar-benar kering sebelum diberi dressing agar tidak encer.</div>
     </div>
-    <a href="recipe.html" class="inline-block mt-8 px-6 py-2 bg-[#803f22] text-white rounded hover:bg-[#5c2c14] transition">← Kembali ke Panduan Dasar</a>
+    <a href="recipe.html" class="inline-block mt-8 px-6 py-2 bg-[#803f22] text-white rounded hover:bg-[#5c2c14] transition">← Kembali ke Resep</a>
   </section>
 
   <footer class="bg-gradient-to-b from-[#803f22] to-[#5a2d18] text-white pt-12 pb-8 slide-up delay-5">
@@ -143,21 +153,36 @@
         </div>
 
         <div class="md:pl-8">
-          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Kontak</h4>
-          <ul class="space-y-3 text-sm text-orange-100">
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">👍</span>
-              <a href="#" class="hover:text-orange-300">CookPedia Official</a>
-            </li>
-          </ul>
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Hubungi Kami</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fas fa-envelope text-lg w-5"></i>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-sm text-orange-100">cookpedia99@gmail.com</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-instagram text-lg w-5"></i>
+              </a>
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-sm text-orange-100">@cookpedia99</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-facebook-f text-lg w-5"></i>
+              </a>
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-sm text-orange-100">Cook Pedia</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-whatsapp text-lg w-5"></i>
+              </a>
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-sm text-orange-100">+62 813-5635-3033</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -170,12 +195,11 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const userDataString = localStorage.getItem('cookeasyUser');
-    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const userData = localStorage.getItem('cookeasyUser');
     const userMenu = document.getElementById('userMenu');
 
     if(userData) {
-        // Parse userData safely
+        const user = JSON.parse(userData);
         userMenu.innerHTML = `
           <div class="relative group inline-block text-left">
           <button class="bg-[#803f22] text-white px-4 py-2 rounded-md flex items-center justify-between gap-2 hover:bg-[#5c2c14] transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#a8552f]">
@@ -185,8 +209,8 @@
             </svg>
           </button>
           <div class="absolute right-0 mt-3 w-40 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-50">
-            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#803f22] transition-colors">My Profile</a>
-            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#803f22] transition-colors">Logout</button>
+            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#803f22] transition-colors">Profil Saya</a>
+            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#803f22] transition-colors">Keluar</button>
           </div>
         </div>
         `;
@@ -213,7 +237,7 @@
 
     function shareToWhatsApp() {
       const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookPedia! 🍗");
+      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookEasy! 🍗");
       window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
     }
 
@@ -224,7 +248,7 @@
 
     function shareToTwitter() {
       const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookPedia! 🍗");
+      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookEasy! 🍗");
       window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
     }
 
@@ -236,131 +260,33 @@
       });
     }
 
-    async function toggleSave() {
-      const userData = JSON.parse(localStorage.getItem('cookeasyUser'));
-      
-      if (!userData || !userData.id) {
-        alert('Anda harus login terlebih dahulu untuk menyimpan resep.');
-        return;
-      }
-
+    function toggleSave() {
+      saved = !saved;
       const btn = document.getElementById("saveBtn");
-      
-      // Show loading state
-      btn.textContent = "⏳";
-      btn.disabled = true;
-      btn.style.backgroundColor = "#f3f4f6";
-      
-      try {
-        if (!saved) {
-          // Save the recipe
-          await saveRecipeToBackend(userData, "Salad Segar");
-          saved = true;
-          btn.textContent = "✅ Tersimpan";
-          btn.style.backgroundColor = "#dcfce7";
-          btn.style.color = "#166534";
-          setTimeout(() => {
-            btn.textContent = "💾 Tersimpan";
-          }, 2000);
-        } else {
-          // Recipe already saved
-          alert('Resep sudah tersimpan sebelumnya!');
-          btn.textContent = "💾 Tersimpan";
-          btn.style.backgroundColor = "#dcfce7";
-        }
-      } catch (error) {
-        console.error('Save error:', error);
-        btn.textContent = "❌ Error";
-        btn.style.backgroundColor = "#fecaca";
-        btn.style.color = "#dc2626";
-        setTimeout(() => {
-          btn.textContent = "💾";
-          btn.style.backgroundColor = "";
-          btn.style.color = "";
-        }, 3000);
-      } finally {
-        btn.disabled = false;
-      }
-    }
-
-    async function saveRecipeToBackend(userData, recipeName) {
-      try {
-        console.log('Attempting to save recipe:', recipeName, 'for user:', userData.id);
-        
-        const recipeId = await getRecipeIdByTitle("Salad Segar");
-        console.log('Found recipe ID:', recipeId);
-        
-        const payload = {
-          user: { id: userData.id },
-          recipe: { id: recipeId }
-        };
-
-        console.log('Sending payload:', payload);
-
-        const res = await fetch('http://localhost:8080/api/saved', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const responseText = await res.text();
-        console.log('Server response:', res.status, responseText);
-
-        if (res.status === 409) {
-          throw new Error('DUPLICATE');
-        } else if (!res.ok) {
-          throw new Error(`Server error: ${res.status} - ${responseText}`);
-        }
-
-        console.log('✅ Recipe saved successfully!');
-        alert('Resep berhasil disimpan! 🎉');
-        
-      } catch (err) {
-        console.error('❌ Save error:', err);
-        if (err.message === 'DUPLICATE') {
-          throw new Error('Resep sudah tersimpan sebelumnya!');
-        } else {
-          throw new Error('Gagal menyimpan resep. Silakan coba lagi.');
-        }
-      }
-    }
-
-    async function getRecipeIdByTitle(title) {
-      try {
-        console.log('Fetching recipes from API...');
-        const res = await fetch('http://localhost:8080/api/recipes');
-        if (!res.ok) {
-          console.log('Failed to fetch recipes, status:', res.status);
-          throw new Error('Gagal mengambil daftar resep');
-        }
-        const recipes = await res.json();
-        console.log('Available recipes:', recipes);
-        console.log('Looking for recipe with title:', title);
-        const found = recipes.find(r => r.title && r.title.trim().toLowerCase() === title.trim().toLowerCase());
-        console.log('Found recipe:', found);
-        if (!found) {
-          console.log('Recipe not found in database');
-          throw new Error('Resep tidak ditemukan di database');
-        }
-        return found.id;
-      } catch (err) {
-        console.error('Error in getRecipeIdByTitle:', err);
-        throw err;
-      }
+      btn.textContent = saved ? "💾 Disimpan" : "💾";
+      btn.classList.toggle("bg-green-100", saved);
     }
   </script>
 
-
-  <!-- Share Modal -->
   <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-80">
       <h3 class="text-lg font-semibold text-[#803f22] mb-4">Bagikan ke:</h3>
       <div class="grid gap-3">
-        <a href="#" onclick="shareToWhatsApp()" class="block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">WhatsApp</a>
-        <a href="#" onclick="shareToFacebook()" class="block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Facebook</a>
-        <a href="#" onclick="shareToTwitter()" class="block bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600 transition">Twitter</a>
-        <button onclick="copyLink()" class="block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">Salin Link</button>
-        <button onclick="closeShareModal()" class="block mt-2 text-sm text-gray-500 hover:text-gray-700">Batal</button>
+        <a href="#" onclick="shareToWhatsApp()" class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="#" onclick="shareToFacebook()" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <a href="#" onclick="shareToInstagram()" class="flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <button onclick="copyLink()" class="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
+          <i class="fas fa-link"></i> Salin Link
+        </button>
+        <button onclick="closeShareModal()" class="block mt-2 text-sm text-gray-500 hover:text-gray-700">
+          Batal
+        </button>
       </div>
     </div>
   </div>

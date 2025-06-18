@@ -48,11 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
             musicPlayerContainer.innerHTML = '';
 
             randomSongs.forEach(songSrc => {
-                const songName = getSongTitle(songSrc);
-                const playerHtml = `
+                const songName = getSongTitle(songSrc);                const playerHtml = `
                     <div class="bg-gray-50 rounded-lg p-4 mb-4">
                         <div class="flex items-center mb-3">
-                            <svg class="w-6 h-6 text-orange-500 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.369 4.369 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z"></path></svg>
+                            <img src="https://img.icons8.com/color/48/000000/apple-music.png" alt="Apple Music" class="w-10 h-10 mr-3">
                             <h4 class="font-semibold text-gray-700 truncate">${songName}</h4>
                         </div>
                         <audio controls class="w-full mt-2">
