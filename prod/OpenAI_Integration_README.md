@@ -19,14 +19,14 @@ The `ChefBotService` class handles interactions with the OpenAI API. It provides
 3. **Set the API key** in your `application.properties` file like so:
 
    ```properties
-   openai.api.key=your_openai_api_key_here
+   gemini.api.key=your_GEMINI_API_KEY_here
    ```
 
 4. **Adjust other OpenAI settings** (optional):
 
    ```properties
-   openai.model=gpt-3.5-turbo
-   openai.api.url=https://api.openai.com/v1/chat/completions
+   gemini.model=gemini-2.0-flash
+   gemini.api.url="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY" \
    ```
 
 ## How It Works
