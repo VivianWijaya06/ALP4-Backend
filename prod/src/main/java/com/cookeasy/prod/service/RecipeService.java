@@ -25,4 +25,12 @@ public class RecipeService {
     public Recipe saveRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
     }
+
+    public void deleteRecipeById(Long id) {
+        recipeRepository.deleteById(id);
+    }
+
+    public boolean existsById(Long id) {
+        return recipeRepository.existsById(id);
+    }
 }

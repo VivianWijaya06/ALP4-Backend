@@ -26,12 +26,35 @@ public class UserService {
     }
 
     public User updateProfile(User updatedUser) {
-        User user = userRepository.findByEmail(updatedUser.getEmail());
-        if (user == null) throw new IllegalArgumentException("User tidak ditemukan");
+        User user;
+        
+        // If ID is provided, find by ID, otherwise find by email
+        if (updatedUser.getId() != null) {
+            user = userRepository.findById(updatedUser.getId()).orElse(null);
+        } else {
+            user = userRepository.findByEmail(updatedUser.getEmail());
+        }
+        
+        if (user == null) {
+            throw new IllegalArgumentException("User tidak ditemukan");
+        }
+        
+        // Check if email is being changed and if new email already exists
+        if (!user.getEmail().equals(updatedUser.getEmail())) {
+            User existingUser = userRepository.findByEmail(updatedUser.getEmail());
+            if (existingUser != null && !existingUser.getId().equals(user.getId())) {
+                throw new IllegalArgumentException("Email sudah digunakan oleh user lain");
+            }
+        }
+        
+        // Update fields
         user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
             user.setPassword(updatedUser.getPassword());
         }
+        
         return userRepository.save(user);
     }
 

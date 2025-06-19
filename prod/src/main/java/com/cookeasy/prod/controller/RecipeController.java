@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cookeasy.prod.model.Recipe;
+import com.cookeasy.prod.model.User;
+import com.cookeasy.prod.repository.UserRepository;
 import com.cookeasy.prod.service.RecipeService;
 
 @RestController
@@ -30,6 +36,9 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public List<Recipe> getRecipes(@RequestParam(value = "title", required = false) String title) {
@@ -61,7 +70,8 @@ public class RecipeController {
         @RequestPart("steps") String stepsJson,
         @RequestPart(value = "tips", required = false) String tips,
         @RequestPart(value = "isUserRecipe", required = false) String isUserRecipeStr,
-        @RequestPart(value = "audioUrls", required = false) String audioUrlsJson
+        @RequestPart(value = "audioUrls", required = false) String audioUrlsJson,
+        @RequestPart(value = "userId", required = false) String userIdStr
     ) {
         try {
             System.out.println("=== Recipe Upload Started ===");
@@ -105,6 +115,22 @@ public class RecipeController {
             }
             recipe.setIsUserRecipe(isUserRecipe);
             System.out.println("Set isUserRecipe: " + isUserRecipe);
+
+            // Set user if userId is provided
+            if (userIdStr != null && !userIdStr.isEmpty()) {
+                try {
+                    Long userId = Long.parseLong(userIdStr);
+                    User user = userRepository.findById(userId).orElse(null);
+                    if (user != null) {
+                        recipe.setUser(user);
+                        System.out.println("Set recipe user: " + user.getUsername());
+                    } else {
+                        System.out.println("User not found with ID: " + userId);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid userId format: " + userIdStr);
+                }
+            }
 
             // Parse JSON arrays dengan pengecekan null/empty
             try {
@@ -261,6 +287,26 @@ public class RecipeController {
             System.err.println("Error fixing URLs: " + e.getMessage());
             e.printStackTrace();
             return "Error: " + e.getMessage();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRecipe(@PathVariable("id") Long id) {
+        try {
+            System.out.println("Deleting recipe with ID: " + id);
+            
+            // Check if recipe exists
+            if (!recipeService.existsById(id)) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            recipeService.deleteRecipeById(id);
+            return ResponseEntity.ok("Recipe deleted successfully");
+        } catch (Exception e) {
+            System.err.println("Error deleting recipe: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error deleting recipe: " + e.getMessage());
         }
     }
 }

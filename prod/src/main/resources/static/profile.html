@@ -7,17 +7,120 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
+    <style>
     body {
       font-family: 'Poppins', sans-serif;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 9998;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      opacity: 1;
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: #fff9f7;
+      max-width: 28rem;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 1rem;
+      transform: translateY(20px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .modal.show .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 38px;
+      cursor: pointer;
+      color: #803f22;
+      transition: color 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #6e3520;
+    }
+
+    .valid {
+      color: #22c55e;
+      list-style-type: '✓ ';
+    }
+
+    .invalid {
+      color: #ef4444;
+      list-style-type: '✗ ';
+    }
+
+    .alert {
+      transition: opacity 0.3s ease;
+    }
+
+    .profile-card {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: transparent;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: transparent;
+    }
+
+    button, input[type="submit"], input[type="button"] {
+      transition: all 0.2s ease;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
   </style>
 </head>
 
 <body class="bg-[#fff9f7] text-gray-800 min-h-screen flex flex-col">
- <nav class="bg-white shadow-md sticky top-0 z-50">
+  <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-
       <div class="flex-shrink-0">
         <h1 class="text-2xl font-bold text-[#803f22] tracking-wide">
           🍴 Cook<span class="text-orange-500">Pedia</span>
@@ -47,26 +150,127 @@
       <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-2xl profile-card p-6 mb-8">
           <div class="flex flex-col md:flex-row items-center">
-            <div
-              class="w-32 h-32 rounded-full bg-gradient-to-r from-[#ffe1d8] to-[#fff3ec] flex items-center justify-center mb-4 md:mb-0 md:mr-6"
-            >
-              <i class="fas fa-user text-5xl text-[#803f22]"></i>
+            <div class="w-32 h-32 rounded-full bg-gradient-to-r from-[#ffe1d8] to-[#fff3ec] flex items-center justify-center mb-4 md:mb-0 md:mr-6 transition-all duration-300 hover:from-[#fff3ec] hover:to-[#ffe1d8]">
+              <i class="fas fa-user text-5xl text-[#803f22] transition-transform duration-300 hover:scale-110"></i>
             </div>
             <div class="text-center md:text-left flex-1">
-              <h1 id="profileUsername" class="text-2xl font-bold text-[#803f22]">Nama Pengguna</h1>
-              <p id="profileEmail" class="text-gray-600 mb-2">user@example.com</p>
+              <h1 id="profileUsername" class="text-2xl font-bold text-[#803f22] transition-colors duration-300">Nama Pengguna</h1>
+              <p id="profileEmail" class="text-gray-600 mb-2 transition-colors duration-300">user@example.com</p>
             </div>
-            <a href="profiledit.html" class="ml-auto hidden md:inline-block bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center">
+            <button onclick="openEditModal()" class="ml-auto hidden md:inline-block bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition-all duration-300 active:scale-95 text-center">
               Edit Profil
-            </a>
+            </button>
           </div>
-          <a href="profiledit.html" class="mt-4 w-full md:hidden bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition text-center inline-block">
-              Edit Profil
-          </a>
+          <button onclick="openEditModal()" class="mt-4 w-full md:hidden bg-[#803f22] text-white px-6 py-2 rounded-lg hover:bg-[#6e3520] transition-all duration-300 active:scale-95 text-center inline-block">
+            Edit Profil
+          </button>
         </div>
       </div>
     </div>
   </main>
+
+  <div id="editProfileModal" class="modal">
+    <div class="modal-content p-6">
+      <div class="flex items-center mb-6">
+        <button onclick="closeEditModal()" class="mr-4 text-[#803f22] hover:text-[#6e3520] transition-colors duration-200">
+          <i class="fas fa-arrow-left text-xl"></i>
+        </button>
+        <h2 class="text-2xl font-bold text-[#803f22]">Edit Profil</h2>
+        <button onclick="closeEditModal()" class="ml-auto text-gray-500 hover:text-gray-700 transition-colors duration-200">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <form id="editProfileForm" class="space-y-5">
+        <div>
+          <label for="editUsername" class="block text-gray-700 mb-1 font-medium">Nama Pengguna</label>
+          <input
+            type="text"
+            id="editUsername"
+            name="username"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#803f22] focus:border-transparent transition-all duration-200"
+            required
+          />
+        </div>
+        
+        <div>
+          <label for="editEmail" class="block text-gray-700 mb-1 font-medium">Email</label>
+          <input
+            type="email"
+            id="editEmail"
+            name="email"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#803f22] focus:border-transparent transition-all duration-200"
+            required
+          />
+        </div>
+        
+        <div class="pt-4 border-t border-gray-200">
+          <h3 class="text-lg font-semibold text-[#803f22] mb-3">Ubah Kata Sandi</h3>
+
+          <div class="space-y-4">
+            <div class="input-group">
+              <label for="currentPassword" class="block text-gray-700 mb-1 font-medium">Kata Sandi Saat Ini</label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                placeholder="********"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#803f22] focus:border-transparent pr-10 transition-all duration-200"/>
+              <span class="password-toggle" onclick="togglePassword('currentPassword')">
+                <i class="far fa-eye-slash"></i>
+              </span>
+            </div>
+            
+            <div class="input-group">
+              <label for="newPassword" class="block text-gray-700 mb-1 font-medium">Kata Sandi Baru</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                placeholder="********"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#803f22] focus:border-transparent pr-10 transition-all duration-200"
+              />
+              <span class="password-toggle" onclick="togglePassword('newPassword')">
+                <i class="far fa-eye-slash"></i>
+              </span>
+            </div>
+            
+            <div class="input-group">
+              <label for="confirmPassword" class="block text-gray-700 mb-1 font-medium">Konfirmasi Kata Sandi Baru</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="********"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#803f22] focus:border-transparent pr-10 transition-all duration-200"
+              />
+              <span class="password-toggle" onclick="togglePassword('confirmPassword')">
+                <i class="far fa-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+          
+          <div class="text-sm text-gray-500 mt-2">
+            <p>Kata sandi harus mengandung:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li id="length" class="invalid transition-colors duration-200">Minimal 8 karakter</li>
+              <li id="uppercase" class="invalid transition-colors duration-200">Minimal 1 huruf kapital</li>
+              <li id="number" class="invalid transition-colors duration-200">Minimal 1 angka</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="pt-4">
+          <button
+            type="submit"
+            class="w-full bg-[#803f22] text-white px-5 py-3 rounded-lg hover:bg-[#6e3520] transition-all duration-300 font-medium active:scale-95"
+          >
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <footer class="bg-gradient-to-b from-[#803f22] to-[#5a2d18] text-white pt-12 pb-8 slide-up delay-5">
     <div class="container mx-auto px-4">
@@ -101,35 +305,51 @@
         </div>
 
         <div class="md:pl-8">
-          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Kontak</h4>
-          <ul class="space-y-3 text-sm text-orange-100">
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@cookeasy.com" class="hover:text-orange-300">info@cookpedia.com</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/cookeasy" class="hover:text-orange-300">@cookpedia</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">👍</span>
-              <a href="#" class="hover:text-orange-300">CookPedia Official</a>
-            </li>
-          </ul>
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Hubungi Kami</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fas fa-envelope text-lg w-5"></i>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-sm text-orange-100">cookpedia99@gmail.com</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-instagram text-lg w-5"></i>
+              </a>
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-sm text-orange-100">@cookpedia99</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-facebook-f text-lg w-5"></i>
+              </a>
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-sm text-orange-100">Cook Pedia</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-whatsapp text-lg w-5"></i>
+              </a>
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-sm text-orange-100">+62 813-5635-3033</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </footer>
-
-<!-- bagian HTML tetap sama seperti sebelumnya -->
-<!-- ... -->
+ 
 <script>
+let currentUserData = null;
+
 document.addEventListener('DOMContentLoaded', async function () {
   const userData = localStorage.getItem('cookeasyUser');
   const userMenu = document.getElementById('userMenu');
 
   if (userData) {
     const user = JSON.parse(userData);
+    currentUserData = user;
 
     // Tampilkan menu profil
     userMenu.innerHTML = `
@@ -161,14 +381,266 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (!response.ok) throw new Error('Gagal mengambil data user dari server');
 
       const fullUser = await response.json();
+      currentUserData = fullUser; // Update dengan data lengkap dari server
+      
       document.getElementById('profileUsername').textContent = fullUser.username || 'Tidak ada nama';
       document.getElementById('profileEmail').textContent = fullUser.email || 'Tidak ada email';
+
+      // Update localStorage dengan data lengkap
+      localStorage.setItem('cookeasyUser', JSON.stringify(fullUser));
 
     } catch (err) {
       console.error('Error saat ambil data user:', err);
       document.getElementById('profileUsername').textContent = user.username || 'User';
       document.getElementById('profileEmail').textContent = user.email || 'Email';
     }
+  }
+
+  // Event listener untuk password validation
+  document.getElementById('newPassword').addEventListener('input', validatePassword);
+  
+  // Event listener untuk form submission
+  document.getElementById('editProfileForm').addEventListener('submit', handleFormSubmission);
+});
+
+// Fungsi untuk membuka modal edit
+function openEditModal() {
+  if (!currentUserData) {
+    showAlert('error', 'Data user tidak ditemukan');
+    return;
+  }
+
+  // Isi form dengan data user saat ini
+  document.getElementById('editUsername').value = currentUserData.username || '';
+  document.getElementById('editEmail').value = currentUserData.email || '';
+  
+  // Reset password fields
+  document.getElementById('currentPassword').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('confirmPassword').value = '';
+  
+  // Reset validation indicators
+  resetPasswordValidation();
+  
+  // Show modal
+  const modal = document.getElementById('editProfileModal');
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+// Fungsi untuk menutup modal edit
+function closeEditModal() {
+  const modal = document.getElementById('editProfileModal');
+  modal.classList.remove('show');
+  document.body.style.overflow = 'auto'; // Restore scrolling
+  
+  // Reset form
+  document.getElementById('editProfileForm').reset();
+  resetPasswordValidation();
+}
+
+// Fungsi untuk toggle password visibility
+function togglePassword(fieldId) {
+  const input = document.getElementById(fieldId);
+  const icon = input.nextElementSibling.querySelector('i');
+  
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  }
+}
+
+// Fungsi untuk validasi password
+function validatePassword() {
+  const password = document.getElementById('newPassword').value;
+  
+  const lengthRequirement = document.getElementById('length');
+  const uppercaseRequirement = document.getElementById('uppercase');
+  const numberRequirement = document.getElementById('number');
+  
+  // Check length
+  if (password.length >= 8) {
+    lengthRequirement.className = 'valid transition-colors duration-200';
+  } else {
+    lengthRequirement.className = 'invalid transition-colors duration-200';
+  }
+  
+  // Check uppercase
+  if (/[A-Z]/.test(password)) {
+    uppercaseRequirement.className = 'valid transition-colors duration-200';
+  } else {
+    uppercaseRequirement.className = 'invalid transition-colors duration-200';
+  }
+  
+  // Check number
+  if (/[0-9]/.test(password)) {
+    numberRequirement.className = 'valid transition-colors duration-200';
+  } else {
+    numberRequirement.className = 'invalid transition-colors duration-200';
+  }
+}
+
+// Fungsi untuk reset password validation
+function resetPasswordValidation() {
+  document.getElementById('length').className = 'invalid transition-colors duration-200';
+  document.getElementById('uppercase').className = 'invalid transition-colors duration-200';
+  document.getElementById('number').className = 'invalid transition-colors duration-200';
+}
+
+// Fungsi untuk handle form submission
+async function handleFormSubmission(e) {
+  e.preventDefault();
+  
+  const username = document.getElementById('editUsername').value.trim();
+  const email = document.getElementById('editEmail').value.trim();
+  const currentPassword = document.getElementById('currentPassword').value;
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  // Validasi basic
+  if (!username || !email) {
+    showAlert('error', 'Nama pengguna dan email harus diisi');
+    return;
+  }
+
+  // Validasi email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showAlert('error', 'Format email tidak valid');
+    return;
+  }
+
+  // Jika ada perubahan password
+  const isChangingPassword = currentPassword || newPassword || confirmPassword;
+  
+  if (isChangingPassword) {
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      showAlert('error', 'Semua field password harus diisi untuk mengubah password');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      showAlert('error', 'Konfirmasi password tidak cocok');
+      return;
+    }
+
+    // Validasi password requirements
+    if (newPassword.length < 8 || !/[A-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      showAlert('error', 'Password baru tidak memenuhi syarat');
+      return;
+    }
+
+    // Verifikasi password saat ini
+    if (currentUserData.password && currentPassword !== currentUserData.password) {
+      showAlert('error', 'Password saat ini salah');
+      return;
+    }
+  }
+
+  // Siapkan data untuk update
+  const updateData = {
+    id: currentUserData.id,
+    username: username,
+    email: email,
+    password: isChangingPassword ? newPassword : currentUserData.password
+  };
+
+  try {
+    // Show loading
+    const submitButton = document.querySelector('#editProfileForm button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Menyimpan...';
+    submitButton.disabled = true;
+
+    // Send update request
+    const response = await fetch('http://localhost:8080/api/users/update', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateData)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Gagal memperbarui profil');
+    }
+
+    const updatedUser = await response.json();
+    
+    // Update localStorage dan currentUserData
+    localStorage.setItem('cookeasyUser', JSON.stringify(updatedUser));
+    currentUserData = updatedUser;
+    
+    // Update tampilan profil
+    document.getElementById('profileUsername').textContent = updatedUser.username;
+    document.getElementById('profileEmail').textContent = updatedUser.email;
+    
+    // Reset form dan tutup modal
+    submitButton.textContent = originalText;
+    submitButton.disabled = false;
+    
+    showAlert('success', 'Profil berhasil diperbarui!');
+    
+    setTimeout(() => {
+      closeEditModal();
+    }, 1500);
+
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    showAlert('error', 'Gagal memperbarui profil: ' + error.message);
+    
+    // Reset button
+    const submitButton = document.querySelector('#editProfileForm button[type="submit"]');
+    submitButton.textContent = 'Simpan Perubahan';
+    submitButton.disabled = false;
+  }
+}
+
+// Fungsi untuk menampilkan alert
+function showAlert(type, message, callback) {
+  // Remove existing alert if any
+  const existingAlert = document.querySelector('.alert');
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+
+  // Create new alert
+  const alert = document.createElement('div');
+  alert.className = `alert fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white font-medium z-[9999] ${
+    type === 'success' ? 'bg-green-500' : 'bg-red-500'
+  }`;
+  alert.textContent = message;
+  
+  document.body.appendChild(alert);
+  
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    alert.classList.add('opacity-0');
+    setTimeout(() => {
+      alert.remove();
+      if (callback) callback();
+    }, 300);
+  }, 3000);
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('editProfileModal');
+  if (e.target === modal) {
+    closeEditModal();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeEditModal();
   }
 });
 </script>

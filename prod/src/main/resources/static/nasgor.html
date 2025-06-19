@@ -237,11 +237,10 @@
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
     }
 
-    function shareToTwitter() {
-      const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookEasy! 🍗");
-      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    function shareToInstagram() {
+      window.open("https://www.instagram.com/yourusername", "_blank");
     }
+
 
     function copyLink() {
       navigator.clipboard.writeText(window.location.href).then(() => {

@@ -6,6 +6,7 @@
   <title>Spaghetti Bolognese - CookPedia</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -127,21 +128,36 @@
         </div>
 
         <div class="md:pl-8">
-          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Kontak</h4>
-          <ul class="space-y-3 text-sm text-orange-100">
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📧</span>
-              <a href="mailto:info@CookPedia.com" class="hover:text-orange-300">info@cookpedia.com</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">📱</span>
-              <a href="https://instagram.com/CookPedia" class="hover:text-orange-300">@cookpedia</a>
-            </li>
-            <li class="flex items-start">
-              <span class="mr-3 mt-0.5">👍</span>
-              <a href="#" class="hover:text-orange-300">CookPedia Official</a>
-            </li>
-          </ul>
+          <h4 class="text-lg font-semibold mb-4 pb-2 border-b border-orange-300/30">Hubungi Kami</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fas fa-envelope text-lg w-5"></i>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&to=cookpedia99@gmail.com" target="_blank" class="text-sm text-orange-100">cookpedia99@gmail.com</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-instagram text-lg w-5"></i>
+              </a>
+              <a href="https://instagram.com/cookpedia99" target="_blank" class="text-sm text-orange-100">@cookpedia99</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-facebook-f text-lg w-5"></i>
+              </a>
+              <a href="https://www.facebook.com/share/16TtL2385J/" target="_blank" class="text-sm text-orange-100">Cook Pedia</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-orange-300 hover:text-orange-400 transition-colors">
+                <i class="fab fa-whatsapp text-lg w-5"></i>
+              </a>
+              <a href="https://wa.me/6281356353033" target="_blank" class="text-sm text-orange-100">‪+62 813-5635-3033‬</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -196,7 +212,7 @@
 
     function shareToWhatsApp() {
       const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookPedia! 🍗");
+      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookEasy! 🍗");
       window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
     }
 
@@ -205,11 +221,10 @@
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
     }
 
-    function shareToTwitter() {
-      const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent("Coba resep Ayam Goreng dari CookPedia! 🍗");
-      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    function shareToInstagram() {
+      window.open("https://www.instagram.com/yourusername", "_blank");
     }
+
 
     function copyLink() {
       navigator.clipboard.writeText(window.location.href).then(() => {
@@ -344,16 +359,26 @@
 
   <!-- Share Modal -->
   <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-80">
-      <h3 class="text-lg font-semibold text-[#803f22] mb-4">Bagikan ke:</h3>
-      <div class="grid gap-3">
-        <a href="#" onclick="shareToWhatsApp()" class="block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">WhatsApp</a>
-        <a href="#" onclick="shareToFacebook()" class="block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Facebook</a>
-        <a href="#" onclick="shareToTwitter()" class="block bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600 transition">Twitter</a>
-        <button onclick="copyLink()" class="block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">Salin Link</button>
-        <button onclick="closeShareModal()" class="block mt-2 text-sm text-gray-500 hover:text-gray-700">Batal</button>
-      </div>
+  <div class="bg-white rounded-lg shadow-lg p-6 w-80">
+    <h3 class="text-lg font-semibold text-[#803f22] mb-4">Bagikan ke:</h3>
+    <div class="grid gap-3">
+      <a href="#" onclick="shareToWhatsApp()" class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="#" onclick="shareToFacebook()" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </a>
+      <a href="#" onclick="shareToInstagram()" class="flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <button onclick="copyLink()" class="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
+        <i class="fas fa-link"></i> Salin Link
+      </button>
+      <button onclick="closeShareModal()" class="block mt-2 text-sm text-gray-500 hover:text-gray-700">
+        Batal
+      </button>
     </div>
   </div>
+</div>
 </body>
 </html>
